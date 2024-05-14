@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './component/NavBar';
+import LandingPage from './component/LandingPage';
 
 type pageProps = {
   
@@ -8,7 +8,7 @@ type pageProps = {
 const page:React.FC<pageProps> = () => {
   
   return <div className='bg-black h-screen'>
-    <NavBar></NavBar>
+    <LandingPage></LandingPage>
   </div>
 }
 export default page;
