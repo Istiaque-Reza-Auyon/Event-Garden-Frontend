@@ -11,7 +11,7 @@ const SignInForm:React.FC<SignInFormProps> = () => {
     <div className='flex flex-col p-10'>
         <h2 className='flex justify-center items-center  text-[rgb(233,186,0)] p-10 text-[40px] font-[DM Sans]'>Sign In</h2>
         <div className='flex flex-col p-5 pt-0'>
-            <form id="formId" className='flex flex-col'>
+            <form className='flex flex-col'>
                 {/* <label className='p-4 pl-0 pb-1 text-[rgb(233,186,0)] font-[DM Sans]'>Email</label> */}
                 <input className='p-2 pl-6 rounded-[50px] mb-4 bg-transparent border-2 text-[rgb(224,225,227)]' name="email" placeholder='Enter email' required />
                 {/* <label className='p-4 pl-0 pb-1 text-[rgb(233,186,0)] font-[DM Sans]'>Password</label> */}
