@@ -15,7 +15,7 @@ const page:React.FC<pageProps> = () => {
     
     return (
         
-        <>
+        <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll'>
             
             <div className='flex bg-[rgb(16,17,19)] w-[100%] pb-5'>
                 <div className='flex justify-center items-center w-[50%] border-e-2 border-b-2 border-[rgb(119,119,119)] py-[12px]'>
@@ -45,7 +45,7 @@ const page:React.FC<pageProps> = () => {
             <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)] h-screen'>
                 <Event></Event>
             </div>
-        </>
+        </div>
         
     )
 }
