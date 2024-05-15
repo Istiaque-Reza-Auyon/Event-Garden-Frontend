@@ -16,6 +16,7 @@ const config: Config = {
       },
       boxShadow: {
         '3xl': '10px 17px 60px 15px rgba(0, 0, 0, 0.3)',
+        'custom1' : '0 0 10px rgba(255,204,0,.6666666667)',
       }
     },
   },
