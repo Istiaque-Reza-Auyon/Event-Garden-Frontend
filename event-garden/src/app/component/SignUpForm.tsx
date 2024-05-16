@@ -16,18 +16,18 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
 
     const messageMap = {
         1: "User created",
-        2: "email already exists!",
+        2: "Email already exists!",
         3: "Password doesn't match!",
         4: "Password should be greater than 8 characters.",
         5: "First name & last name should be greater than 3 characters.",
-        6: "email is not valid!"
+        6: "Email is not valid!",
+        7: "There was a problem! Try later."
     }
 
     function addUser(formEvent:any) {
         formEvent.preventDefault();
     
-        const formData:any = new FormData(formEvent.target)
-    
+        const formData:any = new FormData(formEvent.target);
         let newUser;
     
         (formData.get("firstName").trim().length > 3 && formData.get("lastName").trim().length > 3 && formData.get("password").length > 8 && formData.get("password") === formData.get("confirmPassword") && formData.get("email").includes('@gmail.com') )? newUser = {firstName: formData.get("firstName"), lastName: formData.get("lastName"), email: formData.get("email"), password: formData.get("password"), gender: formData.get("gender"), userId: formData.get("firstName") + formData.get("lastName")}
@@ -37,34 +37,28 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
         : !formData.get("email").includes('@gmail.com') ? setEmailValid(6)
         : setEmailValid(7)
         
-       try {
+        try {
             fetch("http://localhost:5000/sign-up", {
-        
-            // Adding method type
+
             method: "POST",
-        
-            // Adding body or contents to send
             body: JSON.stringify(newUser),
-        
-            // Adding headers to the request
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
-        }).then(async (response) => {
-            const data = await response.json()
-            console.log(1);
-            if (data !== 'error' && data !== 'email already exists') {
-                setEmailValid(1);
-                console.log(1);
-                Cookies.set('token', data , {expires: 7});
-            }
-    else if(data === 'email already exists') {
-        setEmailValid(2);
-    };
-        })
-    } catch (e) {
-        console.error(e);
-    }
+            }).then(async (response) => {
+                const data = await response.json()
+                if (data !== 'error' && data !== 'email already exists') {
+                    setEmailValid(1);
+                    Cookies.set('token', data , {expires: 7});
+                }
+                else if(data === 'email already exists') {
+                    setEmailValid(2);
+                };
+            })
+        } catch (e) {
+            setEmailValid(7)
+            console.error(e);
+        }
     }
     
     
@@ -90,11 +84,10 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
             :  emailValid === 4? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[4]}</p>
             :  emailValid === 5? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[5]}</p>
             :  emailValid === 6? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[6]}</p>
+            :  emailValid === 7? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[7]}</p>
             :  <></>}
             </div>
-        </div>
-
-        
+        </div>        
     )
 }
 export default SignUpForm;
