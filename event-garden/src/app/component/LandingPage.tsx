@@ -11,7 +11,7 @@ type LandingPageProps = {
 
 const LandingPage:React.FC<LandingPageProps> = () => {
 
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -33,7 +33,7 @@ const LandingPage:React.FC<LandingPageProps> = () => {
         <p className='text-white ml-4 font-[DM Sans] text-[18px]'>Join <b>event-goers</b>,<b>creators</b> and <b>organizers</b> in an advanced live event ecosystem on web.</p>
       </div>
       <div className='flex flex-col'>
-        <button className='bg-[rgb(255,204,0)] px-[14px] py-[14px] mt-4 rounded-[15px]'>Launch An Event</button>
+        <button className='bg-[rgb(255,204,0)] px-[14px] py-[14px] mt-4 rounded-[15px]'><Link href="/create_event">Launch An Event</Link></button>
         <button className='bg-transparent text-[rgb(255,204,0)] px-[14px] py-[14px] mt-4 rounded-[15px] border-[rgb(255,204,0)] border-2'><Link href="/explore">Explore Events</Link></button>
       </div>
     </>
