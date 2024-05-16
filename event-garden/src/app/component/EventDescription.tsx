@@ -9,9 +9,10 @@ type EventDescriptionProps = {
     location: string;
     attendeeCount: string;
     description:string;
+    toggleMenu: () => void;
 };
 
-const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,location,attendeeCount,description}) => {
+const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,location,attendeeCount,description,toggleMenu}) => {
     
     return (
         <div className='flex flex-col  mx-5'>
@@ -20,7 +21,7 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
             <p className=' text-[rgb(233,186,0)] my-2'>{date}</p>
             <div className='flex items-center '><FaLocationDot style={{ color: 'rgb(233,186,0)'}}/>  <p className=' text-[rgb(233,186,0)] my-2 mx-2'>{location}</p></div>
             <p className=' text-[rgb(233,186,0)] my-2'>{attendeeCount}+ people are going</p>
-            <Ticket title='LADIES FREE RSVP' price='FREE' description='LADIES FREE WITH RSVP AND REPOST FIRST HOUR 🚩📣'></Ticket>
+            <Ticket toggleMenu={toggleMenu} title='LADIES FREE RSVP' price='FREE' description='LADIES FREE WITH RSVP AND REPOST FIRST HOUR 🚩📣'></Ticket>
             <p className='text-white'>{description}</p>
         </div>
     )
