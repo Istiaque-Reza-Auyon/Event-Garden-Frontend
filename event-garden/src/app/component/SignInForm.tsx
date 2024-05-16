@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 
 type SignInFormProps = {
@@ -22,7 +22,7 @@ const SignInForm:React.FC<SignInFormProps> = () => {
             <div className='flex justify-center items-center'><Link href="/signup" className='underline text-[rgb(233,186,0)] pt-2 font-[DM Sans] underline-offset-4 '>Sign Up</Link></div>
             <div className='flex justify-center items-center'><Link href="/signup" className='underline text-[rgb(233,186,0)] pt-4 font-[DM Sans] underline-offset-4 '>Forgot Password</Link></div>
         </div>
+        
     </div>
-)
-}
+)}
 export default SignInForm;

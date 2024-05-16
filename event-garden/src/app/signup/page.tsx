@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SignUpForm from '../component/SignUpForm';
 
 type pageProps = {
@@ -6,10 +6,12 @@ type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
+
+    
     
     return (
         <div className='flex flex-col bg-black h-screen'>
-            <SignUpForm></SignUpForm>
+            <SignUpForm ></SignUpForm>
         </div>
     )
 }

@@ -7,5 +7,12 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "js-cookie": "^3.0.5",
+    "lodash-contrib": "^4.1200.1"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6"
+  }
 }
