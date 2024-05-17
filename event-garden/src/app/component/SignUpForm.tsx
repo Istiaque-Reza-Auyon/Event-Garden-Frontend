@@ -14,9 +14,9 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
     const[emailValid, setEmailValid] = useState(0);   
     
 
-    const messageMap = {
+    const messageMap : {[key: number]: string} = {
         1: "User created",
-        2: "Email already exists!",
+        2: "Email already exists! Try with another email.",
         3: "Password doesn't match!",
         4: "Password should be greater than 8 characters.",
         5: "First name & last name should be greater than 3 characters.",
@@ -78,14 +78,8 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
                 <input className='p-2 pl-6 rounded-[50px] mb-4 bg-transparent border-2 text-[rgb(224,225,227)]' name="confirmPassword" placeholder='Confirm Password' type='password' required />
                 <button type="submit" className='flex justify-center items-center p-2  bg-[rgb(255,255,255)] text-black mt-5 rounded-[50px]'>Join Event Garden</button>
             </form>
-            {  emailValid === 1 ? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[1]}</p> 
-            :  emailValid === 2? <div><p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[2]}</p><p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>Try with another email.</p></div>
-            :  emailValid === 3? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[3]}</p>
-            :  emailValid === 4? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[4]}</p>
-            :  emailValid === 5? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[5]}</p>
-            :  emailValid === 6? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[6]}</p>
-            :  emailValid === 7? <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[7]}</p>
-            :  <></>}
+            {  emailValid === 0 ? <></> 
+            : <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[emailValid]}</p> }
             </div>
         </div>        
     )
