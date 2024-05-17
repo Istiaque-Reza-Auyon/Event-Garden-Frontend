@@ -15,8 +15,7 @@ type pageProps = {
 const page:React.FC<pageProps> = () => {
     
     return (
-        <button> 
-            <Link href="/event">
+        
                 <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll'>
                     
                     <div className='flex bg-[rgb(16,17,19)] w-[100%] pb-5'>
@@ -45,11 +44,14 @@ const page:React.FC<pageProps> = () => {
                         <RiArrowDropDownLine style={{ color: 'black'}}/>
                     </div>
                     <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)] h-screen'>
-                        <Event></Event>
+                        <button> 
+                            <Link href="/event">
+                                <Event></Event>
+                            </Link>
+                        </button>  
                     </div>
                 </div>
-            </Link>
-        </button>    
+            
     )
 }
 export default page;
