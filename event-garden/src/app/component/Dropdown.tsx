@@ -14,8 +14,8 @@ const Dropdown:React.FC<DropdownProps> = ({options}) => {
       };
 
     return (
-    <div className='bg-[rgb(16,17,19)]'>
-        <select value={selectedOption} onChange={handleChange} className="border-b-2 border-[rgb(230,232,239)]  bg-[rgb(16,17,19)] text-[30px] text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] appearance-none">
+    <div className='flex justify-center items-center bg-[rgb(16,17,19)]'>
+        <select value={selectedOption} onChange={handleChange} className=" flex justify-center items-center border-b-2 border-[rgb(230,232,239)]  bg-[rgb(16,17,19)] text-[30px] text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] appearance-none">
             {options.map((option)=><>
                 <option value={option} className='bg-[rgb(16,17,19)] text-[rgb(230,232,239)]'>{option}</option>
              </>)}

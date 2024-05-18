@@ -1,26 +1,58 @@
 import React, {useState} from 'react';
-import { MdModeEdit } from "react-icons/md";
+import TicketBank from './TicketBank';
 
 type CreateEventProps = {
     price: number;
     toggleMenu: () => void;
+    ticketList: {
+        name: any;
+        quantity: any;
+        price: any;
+        startDate: any;
+      }[];
 };
 
-const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu}) => {
+const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) => {
 
     const [file, setFile] = useState('');
+    const [image, setImage] = useState('');
+    const [url, setUrl] = useState('');
+
+    const uploadImage = async () => {
+        const data = new FormData()
+        data.append("file", image)
+        data.append("upload_preset", "auyon98")
+        data.append("cloud_name", "dvjmvqxsp")
+
+        try {fetch("https://api.cloudinary.com/v1_1/dvjmvqxsp/image/upload",{
+            method: "post",
+            body: data
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            setUrl(data.url)
+        })}catch(err){
+            ( console.log(err))
+        }
+    }
 
     const handleChange = (e:any) => {
+        setImage(e.target.files[0]);
         setFile(URL.createObjectURL(e.target.files[0]));
         console.log(file);
     }
     
 
-    const addEvent = (formEvent: any) => {
+    const addEvent = async (formEvent: any) => {
         formEvent.preventDefault();
 
+        await uploadImage();
+
+        console.log(url);
+
         const formData: any = new FormData(formEvent.target);
-        const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: formData.get('startDate'), endDate: formData.get('endDate'), zone: formData.get('address'), venue: formData.get('venue')} : undefined ;
+        const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: formData.get('startDate'), endDate: formData.get('endDate'), zone: formData.get('address'), venue: formData.get('venue'), poster: url} : undefined ;
+
 
         try {
             fetch("http://localhost:5000/admin/event/create/1", {
@@ -32,14 +64,27 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu}) => {
             }
             }).then(async (response) => {
                 const data = await response.json();
+                try {
+                    fetch(`http://localhost:5000/admin/event/ticket/create/${data}`, {
+        
+                    method: "POST",
+                    body: JSON.stringify(ticketList),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                    }).then(async (response) => {
+                        const resp = await response.json();
+                        resp ? console.log(`success adding tickets at id: ${data}`) : console.log('failed adding tickets');
+                    })
+                } catch (e) {
+                    console.error(e);
+                }
                 data ? console.log('success') : console.log('failed');
             })
         } catch (e) {
             console.error(e);
         }
     }
-        
-    
     
     return (
         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-5 '>
@@ -62,11 +107,7 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu}) => {
                 <input className='p-3 pl-2 rounded-lg mb-4 w-[100%] bg-[rgb(43,44,44)] text-[rgb(240,242,249)] placeholder:text-[rgb(134,135,137)] text-[20px] ' name="category" placeholder='Enter a Category (optional)' />
                 <textarea name="description" placeholder='Show your attendees what they can expect.' className='bg-[rgb(43,44,44)] p-3 pl-2 rounded-lg mb-4 mr-1 w-[100%] text-[rgb(240,242,249)] text-[20px] h-80 placeholder:text-[rgb(134,135,137)] placeholder:text-[20px]' ></textarea>
                 <div className='border-b-2 border-b-[rgb(134,135,137)]'><h2 className='text-[rgb(240,242,249)] py-2 mt-4 pl-2'>Tickets</h2></div>
-                <div className='flex flex-col justify-center items-center mt-5 p-10 pt-4 pl-0 pb-3 rounded-lg box-border shadow-custom1 shadow-[rgb(240,242,249)]'>
-                    <h4 className='flex justify-center text-[rgb(240,242,249)] '>Default Ticket</h4>
-                    <p className='flex justify-center text-[rgb(240,242,249)] p-2'>{`$${price}`}</p>
-                    <button className='flex justify-center p-2 bg-[rgb(240,242,249)] rounded-full w-auto h-auto' onClick={toggleMenu}><MdModeEdit style={{color: 'black'}}/></button>
-                </div>
+                {ticketList.length>0 ? ticketList.map((ticket) => <TicketBank price={ticket.price} name={ticket.name} toggleMenu={toggleMenu}/>) : <TicketBank price={price} name={"Default Ticket"} toggleMenu={toggleMenu}/> }
                 <button className='flex justify-center items-center p-2 bg-[rgb(240,242,249)] text-black mt-5 rounded-[50px]' type="submit">Create Event</button>
             </form>
         </div>

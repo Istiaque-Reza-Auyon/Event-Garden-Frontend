@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Event from '../component/Event';
 import { IoStar } from "react-icons/io5";
 import { FaFilter } from "react-icons/fa";
@@ -13,9 +13,21 @@ type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
+
+    const[eventList, setEventList] = useState([]);
+
+    useEffect (() => {
+        try{
+            fetch("http://localhost:5000/explore")
+            .then(resp => resp.json()).then(data => setEventList(data))
+        } catch(e) {
+            console.error(e);
+        }
+    },[])
+
+    console.log(eventList);
     
-    return (
-        
+    return ( 
                 <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll'>
                     
                     <div className='flex bg-[rgb(16,17,19)] w-[100%] pb-5'>
@@ -45,9 +57,7 @@ const page:React.FC<pageProps> = () => {
                     </div>
                     <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)] h-screen'>
                         <button> 
-                            <Link href="/event">
-                                <Event></Event>
-                            </Link>
+                            {eventList?.map((event: any) => <Link href={`/event/${event["event.id"]}`}> <Event name = {event["event.name"]} venue={event["event.venue"]} poster={event["event.poster"]} startDate={event["event.startDate"]}></Event></Link>)}
                         </button>  
                     </div>
                 </div>
