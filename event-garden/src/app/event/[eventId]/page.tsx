@@ -3,7 +3,7 @@
 import React, {useState, useEffect } from 'react';
 import EventDetails from '../../component/EventDetails';
 import TicketPurchase from '../../component/TicketPurchase';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { TicketType } from '@/app/assets/interfaces';
 
 type pageProps = {
@@ -16,15 +16,16 @@ const page:React.FC<pageProps> = () => {
       venue: string;
       date: string;
       location: string;
-      attendeeCount: string;
-      description:string;}
+      attendeeCount: number;
+      description:string;
+      poster: string;}
 
     const router = useRouter();
 
     const [isOpen, setIsOpen] = useState(false);
     const[price, setPrice] = useState(0);
     const[quantity, setQuantity] = useState(0);
-    const[event, setEventObject] = useState<Event>({ name: '', venue: '', date: '', location: '', attendeeCount: '', description: ''});
+    const[event, setEventObject] = useState<Event>({ name: '', venue: '', date: '', location: '', attendeeCount: 0, description: '', poster: ''});
     const[ticketList, setTicketList] = useState<TicketType[]|[]>([]);
 
     const pathname = usePathname();
@@ -32,7 +33,6 @@ const page:React.FC<pageProps> = () => {
     
     const [cart, setCart] = useState<TicketType[]|[]>([]);
 
-    console.log(cart);
     const increaseQuantity = (ticket:TicketType) => {     
       if(cart.find((item) => item.id === ticket.id)) { 
         const newCart = cart.map((item) => {
@@ -71,11 +71,11 @@ const page:React.FC<pageProps> = () => {
       useEffect(() => {
         
         if (eventId) {
-          getEvents(eventId)
+          getEvent(eventId)
         }
       }, [eventId]);
 
-    const getEvents =(eventId:string) => {
+    const getEvent =(eventId:string) => {
       try{
           fetch(`http://localhost:5000/event/${eventId}`)
           .then(resp => resp.json()).then(data => {
@@ -96,7 +96,7 @@ const page:React.FC<pageProps> = () => {
 
   return (
       <>
-      {!isOpen? <EventDetails toggleMenu={toggleMenu} cart={cart} decreaseQuantity={decreaseQuantity} title={event.name}  venue={event.venue} date={event.date} location={event.location} attendeeCount={event.attendeeCount} description={event.description} setPrice={increaseQuantity} eventId={eventId} ticketList={ticketList} /> : <TicketPurchase toggleMenu={toggleMenu} price={price} quantity={quantity} cart={cart}/>}
+      {!isOpen? <EventDetails poster={event.poster} toggleMenu={toggleMenu} cart={cart} decreaseQuantity={decreaseQuantity} title={event.name}  venue={event.venue} date={event.date} location={event.location} attendeeCount={event.attendeeCount} description={event.description} setPrice={increaseQuantity} eventId={eventId} ticketList={ticketList} /> : <TicketPurchase toggleMenu={toggleMenu} price={price} quantity={quantity} cart={cart}/>}
       </>)
 }
 export default page;

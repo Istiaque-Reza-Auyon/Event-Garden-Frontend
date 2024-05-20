@@ -31,6 +31,7 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) 
         .then(resp => resp.json())
         .then(data => {
             setUrl(data.url)
+            console.log(url);
         })}catch(err){
             ( console.log(err))
         }
@@ -51,7 +52,7 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) 
         console.log(url);
 
         const formData: any = new FormData(formEvent.target);
-        const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: formData.get('startDate'), endDate: formData.get('endDate'), zone: formData.get('address'), venue: formData.get('venue'), poster: url} : undefined ;
+        const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: formData.get('startDate'), endDate: formData.get('endDate'), zone: formData.get('address'), venue: formData.get('venue'), poster: url, description: formData.get('description')} : undefined ;
 
 
         try {
@@ -89,9 +90,9 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) 
     return (
         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-5 '>
             <form className='flex flex-col' onSubmit={addEvent}>
-                <div className="flex flex-col justify-center items-center bg-[url(https://s3.amazonaws.com/images.posh.vip/create-event-flyer-placeholders/Default_Flyer_Placeholder.webp)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">
-                <img src={file} className='max-h-[100%] max-w-[100%] mb-3'/>
-                    <div className=' flex flex-col justify-center items-center'>
+                <div className="flex flex-col justify-center items-center overflow-y bg-[url(https://s3.amazonaws.com/images.posh.vip/create-event-flyer-placeholders/Default_Flyer_Placeholder.webp)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">
+                <img src={file} className='max-h-[90%] max-w-[100%] mb-3'/>
+                    <div className=' flex flex-col justify-center items-center max-h-[10%]'>
                         {file == '' ? <h3 className='flex flex-col justify-center items-center text-[34px] text-[rgb(240,242,249)] pb-5 pt-0 pl-24'>DESIGN YOUR EVENT PAGE</h3> : <></>}
                         <div className=' flex justify-center items-center pl-24 w-[100%]'><input type="file" placeholder='text' onChange={handleChange}/></div>
                     </div>

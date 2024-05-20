@@ -17,7 +17,8 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
     const[credentialValid, setCredentialValid] = useState(0);
 
     const messageMap : {[key: number]: string} = {
-        1: "Please fill up the form with valid credentials",}
+        1: "Please fill up the form with valid credentials.",
+        2: "Ticket secured."}
 
     const checkOutHandler = (event:any) => {
 
@@ -39,7 +40,7 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
             }
             }).then(async (response) => {
                 const data = await response.json();
-                console.log(data);
+                if(data) setCredentialValid(2);
             })
         } catch (e) {
            console.log(`failed because ${e}`);

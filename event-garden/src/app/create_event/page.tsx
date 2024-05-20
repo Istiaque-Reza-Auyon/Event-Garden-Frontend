@@ -22,7 +22,7 @@ const page:React.FC<pageProps> = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const [ticketList, setTicketList] = useState<Ticket[]>([]);
+    const [ticketList, setTicketList] = useState<Ticket[]>([{name: 'Default Ticket', price: 10, quantity: null, startDate: null}]);
 
     const addTicket = (formEvent: any) => {
       formEvent.preventDefault();

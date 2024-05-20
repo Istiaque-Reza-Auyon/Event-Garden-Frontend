@@ -8,7 +8,7 @@ type EventDescriptionProps = {
     venue: string;
     date: string;
     location: string;
-    attendeeCount: string;
+    attendeeCount: number;
     description:string;
     eventId: string|null;
     ticketList: TicketType[]|[];
@@ -25,14 +25,22 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
        return cartTicket?.quantity;
     } 
 
+    const defaultTicket: TicketType = {
+        name: 'Default Ticket',
+        price: 10,
+        quantity: 100,
+        startTime: null,
+        eventId: Number(eventId)
+    }
+
     return (
         <div className='relative flex flex-col  mx-5'>
             <h1 className=' text-[rgb(250,250,252)] text-[34px] my-2'>{title}</h1>
             <p className=' text-[rgb(233,186,0)] my-2'>{venue}</p>
             <p className=' text-[rgb(233,186,0)] my-2'>{date}</p>
             <div className='flex items-center '><FaLocationDot style={{ color: 'rgb(233,186,0)'}}/>  <p className=' text-[rgb(233,186,0)] my-2 mx-2'>{location}</p></div>
-            <p className=' text-[rgb(233,186,0)] my-2'>{attendeeCount}+ people are going</p>
-            {ticketList?.map( (ticket:TicketType, index:number) => <Ticket quantity={quantity(ticket)} ticket={ticket}  decreaseQuantity={decreaseQuantity}  title={ticket.name}  ticketPrice={ticket.price} description={description}  setPrice={setPrice} ></Ticket>)}
+            <p className=' text-[rgb(233,186,0)] my-2'>{attendeeCount} + people are going</p>
+            {ticketList.length>0 ? (ticketList?.map( (ticket:TicketType, index:number) => <Ticket quantity={quantity(ticket)} ticket={ticket}  decreaseQuantity={decreaseQuantity}  title={ticket.name}  ticketPrice={ticket.price} description={'null'}  setPrice={setPrice} ></Ticket>)): <Ticket quantity={quantity(defaultTicket)} ticket={defaultTicket}  decreaseQuantity={decreaseQuantity}  title={defaultTicket.name}  ticketPrice={defaultTicket.price} description={'This is a demo ticket for your event. You can use it as default.'}  setPrice={setPrice} ></Ticket> }
             <p className='text-white'>{description}</p>
             <div className='sticky flex justify-center items-center my-3 bg-[rgb(16,17,19)] border-yellow-400 border-2 w-[20rem] h-[5rem] rounded-full ml-7 shadow-3xl shadow-[rgb(233,235,145)] text-[rgb(250,250,252)] text-2xl'>
                 <button onClick={toggleMenu}>Checkout</button>
