@@ -33,6 +33,9 @@ type IEvent = {
     "longitude": any,
     "live": any,
     "description": any,
-    attendees?: any
+    attendees?: any,
+    totalRevenue?: number,
+    totalTicketsSold?: number,
+    users?: any
 }
 export type {TicketType, IOrganization, IEvent}

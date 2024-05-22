@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import TicketBank from './TicketBank';
+import { FaCamera } from "react-icons/fa6";
 
 type CreateEventProps = {
     price: number;
@@ -14,7 +15,7 @@ type CreateEventProps = {
 
 const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) => {
 
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState('https://s3.amazonaws.com/images.posh.vip/create-event-flyer-placeholders/Default_Flyer_Placeholder.webp');
     const [image, setImage] = useState('');
     const [url, setUrl] = useState('');
 
@@ -25,7 +26,7 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) 
         data.append("cloud_name", "dvjmvqxsp")
 
         try {fetch("https://api.cloudinary.com/v1_1/dvjmvqxsp/image/upload",{
-            method: "post",
+            method: "POST",
             body: data
         })
         .then(resp => resp.json())
@@ -37,19 +38,17 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) 
         }
     }
 
-    const handleChange = (e:any) => {
-        setImage(e.target.files[0]);
-        setFile(URL.createObjectURL(e.target.files[0]));
-        console.log(file);
+    const handleChange = async (e:any) => {
+        await uploadImage();
+        if(url) {
+            setImage(e.target.files[0]);
+            setFile(URL.createObjectURL(e.target.files[0]));
+        }
     }
     
 
     const addEvent = async (formEvent: any) => {
         formEvent.preventDefault();
-
-        await uploadImage();
-
-        console.log(url);
 
         const formData: any = new FormData(formEvent.target);
         const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: formData.get('startDate'), endDate: formData.get('endDate'), zone: formData.get('address'), venue: formData.get('venue'), poster: url, description: formData.get('description')} : undefined ;
@@ -90,11 +89,14 @@ const CreateEvent:React.FC<CreateEventProps> = ({price,toggleMenu, ticketList}) 
     return (
         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-5 '>
             <form className='flex flex-col' onSubmit={addEvent}>
-                <div className="flex flex-col justify-center items-center overflow-y bg-[url(https://s3.amazonaws.com/images.posh.vip/create-event-flyer-placeholders/Default_Flyer_Placeholder.webp)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">
-                <img src={file} className='max-h-[90%] max-w-[100%] mb-3'/>
-                    <div className=' flex flex-col justify-center items-center max-h-[10%]'>
-                        {file == '' ? <h3 className='flex flex-col justify-center items-center text-[34px] text-[rgb(240,242,249)] pb-5 pt-0 pl-24'>DESIGN YOUR EVENT PAGE</h3> : <></>}
-                        <div className=' flex justify-center items-center pl-24 w-[100%]'><input type="file" placeholder='text' onChange={handleChange}/></div>
+                <div style={{backgroundImage: `url(${file})`}} className="flex flex-col justify-end items-end pr-2 pb-2 overflow-y bg-[div: var(backgroundImage)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">                
+                    <div className=' flex flex-col justify-end items-end max-h-[10%]'>
+                        {file == '' ? <h3 className='flex flex-col justify-center items-center text-xl text-[rgb(240,242,249)] pb-5 pt-0 px-10'>DESIGN YOUR EVENT PAGE</h3> : <></>}
+                        <form className='absolute mt-[30%] justify-end items-end'>
+                    <div className='mt-[90%] h-[100%] flex flex-col justify-end items-end'><label htmlFor="file-upload" className="text-5xl ">
+                    <FaCamera style={{color:'yellow'}}/>
+                    <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={handleChange}/></label></div>
+                </form>
                     </div>
                 </div>
                 <h3 className='text-[rgb(240,242,249)] py-2 mt-4 pl-1'>Event Details</h3>
