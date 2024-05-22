@@ -38,8 +38,7 @@ const page:React.FC<pageProps> = () => {
             <div className ="bg-[rgb(20,21,23)] h-screen overflow-y-scroll flex flex-col">
                 <h1 className='text-white px-4 py-6 pt-10 text-3xl'>My Organizations</h1>
                 <div className='flex flex-col justify-center items-center mt-6'>
-                    {organizationList?.map(organization => <button><Link href={`/org/${organization.id}`}><Org organizationName={organization.name}></Org></Link></button>)}
-                    <div className="bg-[rgb(35,35,37)] bg-cover bg-no-repeat h-[200px] w-[354px] rounded-[20px] mt-6 ">
+                <div className="bg-[rgb(35,35,37)] bg-cover bg-no-repeat h-[200px] w-[354px] rounded-[20px] mt-6 ">
                         <div className=' flex flex-col inset-0 bg-custom-gradient rounded-[20px] h-[100%] w-[100%] backdrop-blur-sm'>    
                             <div className='flex flex-col justify-between  mx-5 h-[90%] w-auto'>
                                 <button className="EventCard-location flex justify-start mt-3 items-center text-[rgb(255,255,255)] font-extralight max-h-[100%] max-w-[100%] text-2xl "><FaPlus className='mr-2'/> New Organization</button>
@@ -47,6 +46,7 @@ const page:React.FC<pageProps> = () => {
                             </div> 
                         </div>
                     </div>
+                    {organizationList?.map(organization => <button><Link href={`/org/${organization.id}`}><Org organizationName={organization.name}></Org></Link></button>)}                
                 </div>
             </div>
     
