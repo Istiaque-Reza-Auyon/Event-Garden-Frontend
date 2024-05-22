@@ -33,12 +33,11 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
             <div className='flex items-center '><FaLocationDot style={{ color: 'rgb(233,186,0)'}}/>  <p className=' text-[rgb(233,186,0)] my-2 mx-2'>{location}</p></div>
             <p className=' text-[rgb(233,186,0)] my-2'>{attendeeCount} + people are going</p>
             {ticketList?.map( (ticket:TicketType) => <Ticket quantity={quantity(ticket)} ticket={ticket}  decreaseQuantity={decreaseQuantity}  title={ticket.name}  ticketPrice={ticket.price} description={'null'}  setPrice={setPrice} ></Ticket>)}
-            <p className='text-white'>{description}</p>
-            <div className='sticky flex justify-center items-center my-3 bg-[rgb(16,17,19)] border-yellow-400 border-2 w-[20rem] h-[5rem] rounded-full ml-7 shadow-3xl shadow-[rgb(233,235,145)] text-[rgb(250,250,252)] text-2xl'>
+            <p className='text-white text-wrap'>{description}</p>
+            <div className='flex justify-center items-center my-3 bg-[rgb(16,17,19)] border-yellow-400 border-2 w-[20rem] h-[5rem] rounded-full ml-7 shadow-3xl shadow-[rgb(233,235,145)] text-[rgb(250,250,252)] text-2xl'>
                 <button onClick={toggleMenu}>Checkout</button>
             </div>
         </div>
-       
     )
 }
 export default EventDescription;

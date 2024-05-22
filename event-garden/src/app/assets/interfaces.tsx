@@ -38,4 +38,23 @@ type IEvent = {
     totalTicketsSold?: number,
     users?: any
 }
-export type {TicketType, IOrganization, IEvent}
+
+type ICreateTicket = {
+    name: any;
+    quantity: any;
+    price: any;
+    startDate: any;
+  };
+
+
+interface IFormContext {
+    formData: {
+        file: string;
+        image: any;
+        url: string;
+        price: number;
+        ticketList: ICreateTicket[];
+    };
+    setFormData: React.Dispatch<React.SetStateAction<any>>;
+}
+export type {TicketType, IOrganization, IEvent, ICreateTicket,IFormContext}

@@ -1,25 +1,15 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import { LuDollarSign } from "react-icons/lu";
 import { RxCross1 } from "react-icons/rx";
+import { FormContext } from '../create_event/page';
 
 type CreateTicketProps = {
-    setPrice: (a:number)=> void;
-    toggleMenu: () => void;
-    addTicket: (e: any) => void;
+    
 };
 
-const CreateTicket:React.FC<CreateTicketProps> = ({setPrice, toggleMenu, addTicket}) => {
+const CreateTicket:React.FC<CreateTicketProps> = ({}) => {
 
-    
-
-    const handleChange = (formEvent: any) => {
-        formEvent.preventDefault();
-
-        const formData: any = new FormData(formEvent.target);
-        const price = formData.get('price');
-        setPrice(price);
-        addTicket(formEvent);
-    }
+    const { addTicket, toggleMenu } = useContext(FormContext);
     
     return (
         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-3'>
@@ -27,7 +17,7 @@ const CreateTicket:React.FC<CreateTicketProps> = ({setPrice, toggleMenu, addTick
                 <h3 className='text-[rgb(240,242,249)] py-2 mt-4 pl-2'>Edit Ticket</h3>
                 <button className='p-3'><RxCross1 style={{color:'white'}} onClick={toggleMenu}/></button>
             </div>
-            <form className='flex flex-col' onSubmit={handleChange}>
+            <form className='flex flex-col' onSubmit={addTicket}>
             <div className='border-b-2 border-b-[rgb(134,135,137)]'><h3 className='text-[rgb(134,135,137)] py-2 mt-4 pl-2'>Ticket Details</h3></div>
             <div className='flex mt-2'>
                 <div className='flex flex-col w-[50%]'>
