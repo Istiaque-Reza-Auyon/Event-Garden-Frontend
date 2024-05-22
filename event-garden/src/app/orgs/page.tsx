@@ -16,12 +16,6 @@ const page:React.FC<pageProps> = () => {
     const[organizationList,setOrganizationList] = useState<IOrganization[]|[]>([]);
 
     useEffect(() => {
-        
-    //     if (eventId) {
-    //       getEvents(eventId)
-    //     }
-    //   }, [eventId]);
-
         const getEvents = (() => {
         try{
             fetch(`http://localhost:5000/admin/organization/find/all`)
@@ -41,8 +35,8 @@ const page:React.FC<pageProps> = () => {
                 <div className="bg-[rgb(35,35,37)] bg-cover bg-no-repeat h-[200px] w-[354px] rounded-[20px] mt-6 ">
                         <div className=' flex flex-col inset-0 bg-custom-gradient rounded-[20px] h-[100%] w-[100%] backdrop-blur-sm'>    
                             <div className='flex flex-col justify-between  mx-5 h-[90%] w-auto'>
-                                <button className="EventCard-location flex justify-start mt-3 items-center text-[rgb(255,255,255)] font-extralight max-h-[100%] max-w-[100%] text-2xl "><FaPlus className='mr-2'/> New Organization</button>
-                                <button className="EventCard-location flex justify-end items-center text-[rgb(255,255,255)] font-extralight max-h-[100%] max-w-[100%] text-xl ">Manage Organization<RiArrowRightDoubleFill className='ml-2'/></button>
+                                <Link href={`/create_organization`}><button className="EventCard-location flex justify-start mt-3 items-center text-[rgb(255,255,255)] font-extralight max-h-[100%] max-w-[100%] text-2xl" ><FaPlus className='mr-2'/> New Organization</button></Link>
+                                <Link href={`/create_organization`} className="flex justify-end items-center text-[rgb(255,255,255)] font-extralight max-h-[100%] max-w-[100%] text-xl"><button >Manage Organization<RiArrowRightDoubleFill className='ml-2'/></button></Link>
                             </div> 
                         </div>
                     </div>
