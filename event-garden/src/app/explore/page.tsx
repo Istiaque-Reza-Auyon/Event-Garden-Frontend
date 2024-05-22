@@ -56,9 +56,7 @@ const page:React.FC<pageProps> = () => {
                         <RiArrowDropDownLine style={{ color: 'black'}}/>
                     </div>
                     <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)] h-screen'>
-                        <button> 
-                            {eventList?.map((event: any) => <Link href={`/event/${event["event.id"]}`}> <Event name = {event["event.name"]} venue={event["event.venue"]} poster={event["event.poster"]} startDate={event["event.startDate"]}></Event></Link>)}
-                        </button>  
+                            {eventList?.map((event: any) => <button className='mb-6'> <Link href={`/event/${event["event.id"]}`} > <Event name = {event["event.name"]} venue={event["event.venue"]} poster={event["event.poster"]} startDate={event["event.startDate"]}></Event></Link></button> )}                       
                     </div>
                 </div>
             
