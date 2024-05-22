@@ -7,6 +7,7 @@ import { FaFilter } from "react-icons/fa";
 import Dropdown from '../component/Dropdown';
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from 'next/link';
+import BottomNavBar from '../component/BottomNavBar';
 
 type pageProps = {
     
@@ -58,6 +59,7 @@ const page:React.FC<pageProps> = () => {
                     <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)] h-screen'>
                             {eventList?.map((event: any) => <button className='mb-6'> <Link href={`/event/${event["event.id"]}`} > <Event name = {event["event.name"]} venue={event["event.venue"]} poster={event["event.poster"]} startDate={event["event.startDate"]}></Event></Link></button> )}                       
                     </div>
+                    <BottomNavBar/>
                 </div>
             
     )

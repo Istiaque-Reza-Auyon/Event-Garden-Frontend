@@ -5,6 +5,7 @@ import CreateTicket from '../component/CreateTicket';
 import { ICreateTicket } from '../assets/interfaces';
 import { IFormContext } from '../assets/interfaces';
 import { FormContext } from '../create_event/page';
+import { isoToDateTimeAmPm } from '../../../utils';
 
 
 type CreateEventProps = {
@@ -20,7 +21,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         const formData: any = new FormData(formEvent.target);
-        const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: formData.get('startDate'), endDate: formData.get('endDate'), zone: formData.get('address'), venue: formData.get('venue'), poster: formData.url, description: formData.get('description')} : undefined ;
+        const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: isoToDateTimeAmPm(formData.get('startDate')), endDate: isoToDateTimeAmPm(formData.get('endDate')), zone: formData.get('address'), venue: formData.get('venue'), poster: formData.url, description: formData.get('description')} : undefined ;
 
          
         try {
