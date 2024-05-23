@@ -8,6 +8,7 @@ import CreateTicket from '../component/CreateTicket';
 import { ICreateTicket } from '../assets/interfaces';
 import TicketPurchase from '../component/TicketPurchase';
 import CreateEvent from '../component/CreateEvent';
+import Cookies from 'js-cookie';
 
 
 
@@ -21,6 +22,7 @@ const page:React.FC<pageProps> = () => {
       const[isOpen, setIsOpen] = useState(false);
       const [formData, setFormData] = useState({
         file: 'https://s3.amazonaws.com/images.posh.vip/create-event-flyer-placeholders/Default_Flyer_Placeholder.webp',
+        token : false,
         image: '',
         name: '',
         startTime: '',
@@ -33,6 +35,8 @@ const page:React.FC<pageProps> = () => {
         price: 10,
         ticketList: [{ name: 'Default Ticket', price: 10, quantity: null, startDate: null }],
       });
+
+
       
 
       const toggleMenu = () => {
@@ -56,8 +60,6 @@ const page:React.FC<pageProps> = () => {
       }
   }
 
-    
-
   const uploadImage = async () => {
     const data = new FormData()
 
@@ -78,6 +80,7 @@ const page:React.FC<pageProps> = () => {
         ( console.log(err))
     }
 }
+
       
       return (
         <>

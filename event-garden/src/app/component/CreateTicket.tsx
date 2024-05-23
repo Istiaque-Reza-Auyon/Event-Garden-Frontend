@@ -12,7 +12,7 @@ const CreateTicket:React.FC<CreateTicketProps> = ({}) => {
     const { addTicket, toggleMenu } = useContext(FormContext);
     
     return (
-        <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-3'>
+        <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-3 pb-[7vh]'>
             <div className='flex justify-between'>
                 <h3 className='text-[rgb(240,242,249)] py-2 mt-4 pl-2'>Edit Ticket</h3>
                 <button className='p-3'><RxCross1 style={{color:'white'}} onClick={toggleMenu}/></button>

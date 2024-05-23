@@ -25,8 +25,6 @@ const page:React.FC<pageProps> = () => {
             console.error(e);
         }
     },[])
-
-    console.log(eventList);
     
     return ( 
                 <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll'>

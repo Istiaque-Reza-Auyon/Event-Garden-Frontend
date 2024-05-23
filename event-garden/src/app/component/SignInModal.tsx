@@ -2,17 +2,14 @@
 
 import React, {useState} from 'react';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie'
 
-type SignInFormProps = {
-    
+type SignInModalProps = {
+    setTokenStatus: () => void;
+    tokenStatus: boolean;
 };
 
-const SignInForm:React.FC<SignInFormProps> = () => {
-
-    const[status, setStatus] = useState(0);
-    const router = useRouter();
+const SignInModal:React.FC<SignInModalProps> = ({setTokenStatus, tokenStatus}) => {
 
     const signInUser = (formEvent:any) => {
         formEvent.preventDefault();
@@ -30,21 +27,22 @@ const SignInForm:React.FC<SignInFormProps> = () => {
             }).then(async (response) => {
                 const data = await response.json()
                 if (data) {
-                    setStatus(0);
+                    setTokenStatus(true);
                     Cookies.set('token', data , {expires: 7});
-                    router.push('/explore');
                 }
                 else {
-                    setStatus(1);
+                    setTokenStatus(false);
                 };
             })
         } catch(e) {
-
+            console.error(e);
+            setTokenStatus(false);
         }
     }
+
     
     return (
-    <div className='flex flex-col p-10'>
+        <div className='flex flex-col p-10 border-2px border-red-500'>
         <h2 className='flex justify-center items-center  text-[rgb(233,186,0)] p-10 text-[40px] font-[DM Sans]'>Sign In</h2>
         <div className='flex flex-col p-5 pt-0'>
             <form className='flex flex-col' onSubmit={signInUser}>
@@ -54,11 +52,12 @@ const SignInForm:React.FC<SignInFormProps> = () => {
                 <input className='p-2 pl-6 rounded-[50px] bg-transparent border-2 text-[rgb(224,225,227)]' name="password" placeholder='Enter password' type="password" required />
                 <button type="submit" className='flex justify-center items-center p-2  bg-[rgb(233,186,0)] text-black mt-5 rounded-[50px]'>Continue</button>
             </form>
-            {status === 1? <p className='flex justify-center pt-7 text-[rgb(233,0,12)] text-xl'>Email or password didn't mactch! Try again.</p> : <></>}
+            {!tokenStatus? <p className='flex justify-center pt-7 text-[rgb(233,0,12)] text-xl'>Please, sign in first with valid credentials</p> : <></>}
             <p className='flex justify-center items-center text-[rgb(212,213,215)] mt-[10px] font-[DM Sans]'>Don't have an account?</p>
             <div className='flex justify-center items-center'><Link href="/signup" className='underline text-[rgb(233,186,0)] pt-2 font-[DM Sans] underline-offset-4 '>Sign Up</Link></div>
             <div className='flex justify-center items-center'><Link href="/signup" className='underline text-[rgb(233,186,0)] pt-4 font-[DM Sans] underline-offset-4 '>Forgot Password</Link></div>
         </div>        
     </div>
-)}
-export default SignInForm;
+    )
+}
+export default SignInModal;

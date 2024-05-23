@@ -23,7 +23,7 @@ type EventDetailsProps = {
 const EventDetails:React.FC<EventDetailsProps> = ({toggleMenu, title, venue, date, location, attendeeCount, description, setPrice, eventId, ticketList, cart, poster, decreaseQuantity}) => {
     
     return (
-        <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll'>
+        <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll pb-[7vh]'>
             <div className=" h-[400px] w-auto ">
                 <img src={poster} className="h-[100%] w-[100%] "/>
             </div>

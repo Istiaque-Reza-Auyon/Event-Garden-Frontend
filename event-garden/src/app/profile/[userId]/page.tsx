@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { MdEmail } from "react-icons/md";
 import { FaCrown } from "react-icons/fa";
 import { isoToDateTime } from '../../../../utils';
+import Cookies from 'js-cookie'
 
 type pageProps = {
     
@@ -65,6 +66,10 @@ const page:React.FC<pageProps> = () => {
       }
   };
 
+  const logOut = () => {
+    Cookies.remove('token');
+  }
+
     
     return (
         <div className='h-screen overflow-y-scroll bg-[rgb(21,22,24)]'>
@@ -80,7 +85,7 @@ const page:React.FC<pageProps> = () => {
                 <div className='flex flex-col items-center w-[100%] border-b-[0.5px] border-[rgb(65,66,66)]'>
                     <div className='flex flex-col items-center border-b-[0.5px] border-[rgb(65,66,66)]'>
                         <Link href={`/orgs`}><button className='flex items-center p-2 bg-[rgb(240,242,249)] text-black mt-5 rounded-[50px]'>View Organizations</button></Link>
-                        <Link href={`/sigin`} className='w-[100%] '><button className='flex items-center justify-center p-2 bg-[rgb(240,242,249)] text-black mt-5 rounded-[50px] mb-5 w-[100%]'>Logout</button></Link>
+                        <Link href={`/signin`} className='w-[100%] '><button className='flex items-center justify-center p-2 bg-[rgb(240,242,249)] text-black mt-5 rounded-[50px] mb-5 w-[100%]' onClick={logOut}>Logout</button></Link>
                     </div>
                 </div>
             </div>
