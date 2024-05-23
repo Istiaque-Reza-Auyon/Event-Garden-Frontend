@@ -1,58 +1,99 @@
 import React, {useState, useContext, useEffect} from 'react';
 import TicketBank from './TicketBank';
 import { FaCamera } from "react-icons/fa6";
-import CreateTicket from '../component/CreateTicket';
-import { ICreateTicket } from '../assets/interfaces';
-import { IFormContext } from '../assets/interfaces';
+import { IOrganization } from '../assets/interfaces';
 import { FormContext } from '../create_event/page';
 import { isoToDateTimeAmPm } from '../../../utils';
 import SignInModal from '../component/SignInModal';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { TicketType } from '../assets/interfaces';
 
 
 type CreateEventProps = {
+    ticketList : TicketType[]; 
 };
 
 
 const CreateEvent:React.FC<CreateEventProps> = () => {
 
     const { formData, setFormData, handleChange, toggleMenu } = useContext(FormContext);
-    const [orgId,setOrgId] = useState([]);
-    const [userId, setUserId] = useState();
-    const [tokenStatus, setTokenStatus] = useState(false);
+    const [orgList,setOrgList] = useState<IOrganization[]>([]);
+    const [orgId, setOrgId] = useState('');
+    const [tryAgain, setTryAgain] = useState(0);
+    const [tokenStatus, setTokenStatus] = useState(true);
+    const [selectedOrg, setSelectedOrg] = useState('');
 
-    console.log(tokenStatus);
-    console.log(Cookies.get('token'));
+    const router = useRouter();
 
+    const allocateOrg = (formEvent: any) => {
+        formEvent.preventDefault();
 
-
-    useEffect (() => {
         try{
-            fetch("http://localhost:5000/find/id")
+            console.log(Cookies.get('token'));
+            fetch("http://localhost:5000/admin/organization/find/all",{
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
             .then(resp => resp.json())
             .then(data => {
-                console.log(data);
-                if(data !== 'error parsing jwt') setTokenStatus(true);
-                else setTokenStatus(false);
-                console.log('in use effect', tokenStatus);
+                console.log('here', data)
+                if(data !== 'Error finding all organizations') {
+                    setOrgList(data);         
+                }
+                else {
+                    setTokenStatus(false);}   
             })
         } catch(e) {
             console.error(e);
         }
-    },[])
+    }
 
-    console.log('after use effect', tokenStatus);
+    const authorize = (formEvent: any) => {
+        formEvent.preventDefault();
+
+        try{
+            fetch("http://localhost:5000/find/id",{
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                if(data !== 'error parsing jwt') {
+                    if(orgId == '') {allocateOrg(formEvent);
+                    setTokenStatus(true);   }
+                    else addEvent(formEvent);      
+                }
+                else {
+                    setTokenStatus(false);}   
+            })
+        } catch(e) {
+            console.error(e);
+        }
+        return false;
+    }
+
+    const toggleModal = () => {
+       if(!tokenStatus) setTokenStatus(true);
+       if(orgList.length>0) setOrgList([]);
+    }
 
 
     const addEvent = async (formEvent: any) => {
         formEvent.preventDefault();
 
-        const formData: any = new FormData(formEvent.target);
-        const event = formData.get('name').trim().length>0 && formData.get('venue').trim().length>0 ? {name: formData.get('name'), startDate: isoToDateTimeAmPm(formData.get('startDate')), endDate: isoToDateTimeAmPm(formData.get('endDate')), zone: formData.get('address'), venue: formData.get('venue'), poster: formData.url, description: formData.get('description')} : undefined ;
+        const formdata: any = new FormData(formEvent.target);
+        const event = formdata.get('name').trim().length>0 && formdata.get('venue').trim().length>0 ? {name: formdata.get('name'), startDate: isoToDateTimeAmPm(formdata.get('startDate')), endDate: isoToDateTimeAmPm(formdata.get('endDate')), zone: formdata.get('address'), venue: formdata.get('venue'), poster: formData.url, description: formdata.get('description')} : undefined ;
 
          
         try {
-            fetch("http://localhost:5000/admin/event/create/1", {
+            fetch(`http://localhost:5000/admin/event/create/${orgId}`, {
 
             method: "POST",
             body: JSON.stringify(event),
@@ -61,6 +102,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             }
             }).then(async (response) => {
                 const data = await response.json();
+                console.log(formData.ticketList);
                 try {
                     fetch(`http://localhost:5000/admin/event/ticket/create/${data}`, {
         
@@ -76,24 +118,39 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
                 } catch (e) {
                     console.error(e);
                 }
-                data ? console.log('success') : console.log('failed');
+                data ? router.push(`/event/${data}`) : console.log('failed');
             })
         } catch (e) {
             console.error(e);
         }
     }
 
+    const setOrg = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        setOrgId(event.target.value);
+      };
+
+    console.log(orgId);
+
 
     return (
-         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-5 pb-[7vh]'>
-           
+         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-5 pb-[7vh]'>      
             <div className="relative">
-                <form className='flex flex-col' onSubmit={addEvent}>
-                {!tokenStatus? <SignInModal setTokenStatus={setTokenStatus} tokenStatus={tokenStatus} className="fixed top-[7vh]"/> : <></>}
+            {!tokenStatus? <SignInModal setTokenStatus={setTokenStatus} tokenStatus={tokenStatus} toggleMenu={toggleModal}/> : <></>}
+            {orgList.length>0? 
+            <div className='flex flex-col justify-center items-center fixed z-10 bg-[rgb(16,17,19)] rounded-lg border-2 max-w-[90%] border-red-500 mt-80 mx-10 py-10 '>
+                <label className='text-2xl p-2 text-[rgb(233,186,0)]'>Select an Organization
+                <select value={orgId} onChange={setOrg} className=" flex justify-center items-center  bg-[rgb(16,17,19)] text-5xl text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] ">
+                    {orgList.map((option: IOrganization)=><>
+                        <option value={option.id} className='bg-[rgb(16,17,19)] text-[rgb(230,232,239)]'>{option.name}</option>
+                    </>)}
+                </select></label>
+                <button className='flex justify-center items-center p-2 bg-[rgb(233,186,0)] text-black mt-5 rounded-[50px] px-10' onClick={toggleModal}>Create</button>
+            </div> : <></> }
+                <form className='flex flex-col' onSubmit={authorize}>   
                     <div style={{backgroundImage: `url(${formData.file})`}} className="flex flex-col justify-end items-end pr-2 pb-2 overflow-y bg-[div: var(backgroundImage)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">                
                         <div className=' flex flex-col justify-end items-end max-h-[10%]'>
                             {formData.file == '' ? <h3 className='flex flex-col justify-center items-center text-xl text-[rgb(240,242,249)] pb-5 pt-0 px-10'>DESIGN YOUR EVENT PAGE</h3> : <></>}
-                            <form className='absolute mt-[30%] justify-end items-end'>
+                            <form className='absolute z-0 mt-[30%] justify-end items-end'>
                         <div className='mt-[90%] h-[100%] flex flex-col justify-end items-end'><label htmlFor="file-upload" className="text-5xl ">
                         <FaCamera style={{color:'yellow'}}/>
                         <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={handleChange}/></label></div>
