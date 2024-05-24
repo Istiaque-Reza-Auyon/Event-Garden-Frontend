@@ -23,6 +23,8 @@ const page:React.FC<pageProps> = () => {
     const pathname = usePathname();
     const userId = pathname.split('/')[2];
 
+    const router = useRouter();
+
     const uploadImage = async () => {
         const data = new FormData()
         data.append("file", image)
@@ -57,9 +59,16 @@ const page:React.FC<pageProps> = () => {
 
     const getEvent =(eventId:string) => {
       try{
-          fetch(`http://localhost:5000/profile/${userId}`)
+          fetch(`http://localhost:5000/profile/${userId}`, {
+          method: "GET",
+          credentials: 'include',
+          headers: {
+              "Content-type": "application/json; charset=UTF-8"
+          }
+          })
           .then(resp => resp.json()).then(data => {
-            setUserObject(data);
+            if (data!=='error parsing jwt') setUserObject(data);
+            else router.push('/signin');
           })
       } catch(e) {
           console.error(e);

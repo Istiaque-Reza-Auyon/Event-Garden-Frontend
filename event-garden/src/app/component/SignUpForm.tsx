@@ -37,7 +37,7 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
         : !formData.get("email").includes('@gmail.com') ? setEmailValid(6)
         : setEmailValid(7)
         
-        try {
+       if (newUser) { try {
             fetch("http://localhost:5000/sign-up", {
 
             method: "POST",
@@ -58,7 +58,7 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
         } catch (e) {
             setEmailValid(7)
             console.error(e);
-        }
+        }}
     }
     
     
