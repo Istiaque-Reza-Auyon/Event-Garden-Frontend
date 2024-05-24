@@ -3,6 +3,8 @@
 import React, {useEffect, useState} from 'react';
 import { usePathname } from 'next/navigation';
 import { IEvent } from '@/app/assets/interfaces';
+import { CiCircleRemove } from "react-icons/ci";
+import Link from 'next/link';
 
 type pageProps = {
     
@@ -50,7 +52,13 @@ const page:React.FC<pageProps> = () => {
     }
     
     return (
+     <div className='block h-screen overflow-y-scroll bg-[rgb(21,22,24)]'>
+      <Link href={`/edit/event/${eventId}`}><button className='flex justify-start bg-white rounded-full mt-5 ml-5'><CiCircleRemove size={24}/></button></Link>
+      <div className='flex justify-center text-[rgb(255,204,0)] text-4xl'>View all orders</div>
+         
         <div className='flex flex-col items-center h-screen overflow-y-scroll p-10 px-5 bg-[rgb(21,22,24)]'>
+          
+          
         {eventObject?.users?.map((user:any) => <div className='flex flex-col items-center p-5 mx-4 w-[100%] max-h-[30%] border-2 bg-black border-black rounded-lg mb-2'>
             <div className='flex w-[100%] items-center justify-between h-[100%]'><h2 className='text-[rgb(255,204,0)] underline underline-offset-1 text-xl'>{user.name}</h2><div className='text-[rgb(136,130,121)] underline underline-offset-1 text-xs p-2'>Order #{user.orderId}</div></div>
             <div className='flex w-[100%] items-center justify-between'>
@@ -59,6 +67,7 @@ const page:React.FC<pageProps> = () => {
             </div>
         </div>)}
         </div>
+     </div>
     )
 }
 export default page;
