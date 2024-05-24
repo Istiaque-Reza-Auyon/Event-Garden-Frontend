@@ -7,6 +7,7 @@ import { IOrganization } from '@/app/assets/interfaces';
 import { IEvent } from '@/app/assets/interfaces';
 import Event from '@/app/component/Event';
 import { BiSolidEditAlt } from "react-icons/bi";
+import { isoToDateTimeAmPm } from '../../../../utils';
 
 
 type pageProps = {
@@ -21,7 +22,6 @@ const page:React.FC<pageProps> = () => {
 
 
     const pathname = usePathname();
-    console.log(pathname.split('/'));
     const orgId = pathname.split('/')[2];
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const page:React.FC<pageProps> = () => {
   };
     
     return (
-    <div className='flex flex-col h-screen items-center overflow-y-scroll bg-[rgb(18,19,21)] px-2 py-10'>
+    <div className='flex flex-col h-screen items-center overflow-y-scroll bg-[rgb(18,19,21)] px-2 py-10 pb-[7vh]'>
         <div className='flex  my-5'><h1 className='text-6xl bg-clip-text text-transparent bg-gradient-to-r from-[#FFCC00] to-[rgb(106,110,117)] font-[DM Sans]'>{orgObject?.name}</h1></div>
         <Link href={'/create_event'} className='w-[100%]'><button type="submit" className='flex justify-center items-center p-3 w-[100%] bg-[rgb(16,17,19)] text-xl  text-white my-8 rounded-[50px] border-[rgb(134,135,137)] border-2'>Create New Event+</button></Link>
         <div className='flex flex-col items-center py-2 mx-4 w-[100%] border-2 shadow-3xl shadow-black border-black rounded-lg drop-shadow-xl my-10'>
@@ -59,7 +59,7 @@ const page:React.FC<pageProps> = () => {
         <div>
             {eventList?.map(event => <Link href={`/event/${event.id}`}>
                 <div className='relative flex flex-col items-center py-2  bg-[rgb(16,17,19)]'>
-                    <Event name={event.name} venue={event.venue} poster={event.poster} startDate={event.startDate}></Event>
+                    <Event name={event.name} venue={event.venue} poster={event.poster} startDate={isoToDateTimeAmPm(event.startDate)} orgId={event.organizationId} orgPoster=''></Event>
                     <Link href={`/edit/event/${event.id}`} className='absolute ml-[80%]'><button type="submit" className='flex justify-start items-start p-3 bg-[rgb(16,17,19)] text-xl  text-white mt-2 rounded-[50px] border-[rgb(134,135,137)] border-2'><BiSolidEditAlt /></button></Link>
                 </div>
             </Link>)}

@@ -23,7 +23,7 @@ type IOrganization = {
 type IEvent = {
     "id"?: number,
     "name": string,
-    "organizationId": number,
+    "organizationId": string,
     "startDate": any,
     "endDate": any,
     "venue": string,

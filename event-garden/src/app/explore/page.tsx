@@ -8,6 +8,7 @@ import Dropdown from '../component/Dropdown';
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from 'next/link';
 import BottomNavBar from '../component/BottomNavBar';
+import { isoToDateTimeAmPm } from '../../../utils';
 
 type pageProps = {
     
@@ -27,8 +28,7 @@ const page:React.FC<pageProps> = () => {
     },[])
     
     return ( 
-                <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll'>
-                    
+                <div className='flex flex-col bg-[rgb(16,17,19)] h-screen overflow-y-scroll pb-[7vh]'>
                     <div className='flex bg-[rgb(16,17,19)] w-[100%] pb-5'>
                         <div className='flex justify-center items-center w-[50%] border-e-2 border-b-2 border-[rgb(119,119,119)] py-[12px]'>
                             <IoStar style={{ color: 'white' }} className='mr-2'/>
@@ -54,8 +54,8 @@ const page:React.FC<pageProps> = () => {
                         <Dropdown options= {['New York City', 'Miami', 'Los Angeles']}></Dropdown>
                         <RiArrowDropDownLine style={{ color: 'black'}}/>
                     </div>
-                    <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)] h-screen'>
-                            {eventList?.map((event: any) => <button className='mb-6'> <Link href={`/event/${event["event.id"]}`} > <Event name = {event["event.name"]} venue={event["event.venue"]} poster={event["event.poster"]} startDate={event["event.startDate"]}></Event></Link></button> )}                       
+                    <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)]'>
+                            {eventList?.map((event: any) => <button className='mb-6 relative'> <Link href={`/event/${event["event.id"]}`} > <Event name = {event["event.name"]} venue={event["event.venue"]} poster={event["event.poster"]} startDate={isoToDateTimeAmPm(event["event.startDate"])} orgPoster={event["event.organization.poster"]} orgId={event["event.organization.id"]}></Event></Link></button> )}                       
                     </div>
                     <BottomNavBar/>
                 </div>
