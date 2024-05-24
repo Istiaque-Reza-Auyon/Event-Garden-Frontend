@@ -7,6 +7,7 @@ import { isoToDateTimeAmPm } from '../../../utils';
 import SignInModal from '../component/SignInModal';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import CreateOrgModal from './CreateOrgModal';
 import { TicketType } from '../assets/interfaces';
 
 
@@ -21,7 +22,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
     const [orgId, setOrgId] = useState('');
     const [tryAgain, setTryAgain] = useState(0);
     const [tokenStatus, setTokenStatus] = useState(true);
-    const [selectedOrg, setSelectedOrg] = useState('');
+    const [show, setShow] = useState(false);
 
     const router = useRouter();
 
@@ -29,7 +30,6 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         try{
-            console.log(Cookies.get('token'));
             fetch("http://localhost:5000/admin/organization/find/all",{
                 method: "GET",
                 credentials: 'include',
@@ -39,12 +39,13 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             })
             .then(resp => resp.json())
             .then(data => {
-                console.log('here', data)
+                if(data.length == 0) setShow(true);
                 if(data !== 'Error finding all organizations') {
                     setOrgList(data);         
                 }
                 else {
-                    setTokenStatus(false);}   
+                    setTokenStatus(false);
+                    setShow(true);}   
             })
         } catch(e) {
             console.error(e);
@@ -79,6 +80,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
     }
 
     const toggleModal = () => {
+       if (orgList.length == 1) setOrgId(String(orgList[0].id));
        if(!tokenStatus) setTokenStatus(true);
        if(orgList.length>0) setOrgList([]);
     }
@@ -88,11 +90,11 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         const formdata: any = new FormData(formEvent.target);
-        const event = formdata.get('name').trim().length>0 && formdata.get('venue').trim().length>0 ? {name: formdata.get('name'), startDate: isoToDateTimeAmPm(formdata.get('startDate')), endDate: isoToDateTimeAmPm(formdata.get('endDate')), zone: formdata.get('address'), venue: formdata.get('venue'), poster: formData.url, description: formdata.get('description')} : undefined ;
+        const event = formdata.get('name').trim().length>0 && formdata.get('venue').trim().length>0 ? {name: formdata.get('name'), startDate: formdata.get('startDate'), endDate: formdata.get('endDate'), zone: formdata.get('address'), venue: formdata.get('venue'), poster: formData.url, description: formdata.get('description')} : undefined ;
 
          
         try {
-            fetch(`http://localhost:5000/admin/event/create/${orgId}`, {
+            fetch(`http://localhost:5000/admin/event/create/${Number(orgId)}`, {
 
             method: "POST",
             body: JSON.stringify(event),
@@ -111,7 +113,6 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
                     }
                     }).then(async (response) => {
                         const resp = await response.json();
-                        resp ? console.log(`success adding tickets at id: ${data}`) : console.log('failed adding tickets');
                     })
                 } catch (e) {
                     console.error(e);
@@ -127,7 +128,31 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         setOrgId(event.target.value);
       };
 
-    console.log(orgId);
+    const handleCreate = (event:any) => {
+        event.preventDefault();
+        setShow(false);
+
+        const formData:any = new FormData(event.target as HTMLFormElement);
+ 
+        const organization = {name: formData.get('name')} ;
+
+
+        try {
+            fetch("http://localhost:5000/admin/organization/create", {
+
+            method: "POST",
+            body: JSON.stringify(organization),
+            credentials: 'include',
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+            }).then(async (response) => {
+                const data = await response.json();
+            })
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     return (
@@ -137,13 +162,14 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             {orgList.length>0? 
             <div className='flex flex-col justify-center items-center fixed z-10 bg-[rgb(16,17,19)] rounded-lg border-2 max-w-[90%] border-red-500 mt-80 mx-10 py-10 '>
                 <label className='text-2xl p-2 text-[rgb(233,186,0)]'>Select an Organization
-                <select value={orgId} onChange={setOrg} className=" flex justify-center items-center  bg-[rgb(16,17,19)] text-5xl text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] ">
+                <select value={orgId}  onChange={setOrg} className=" flex justify-center items-center  bg-[rgb(16,17,19)] text-5xl text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] ">
                     {orgList.map((option: IOrganization)=><>
-                        <option value={option.id} className='bg-[rgb(16,17,19)] text-[rgb(230,232,239)]'>{option.name}</option>
+                        <option value={option.id} key={option.id} className='bg-[rgb(16,17,19)] text-[rgb(230,232,239)]'>{option.name}</option>
                     </>)}
                 </select></label>
                 <button className='flex justify-center items-center p-2 bg-[rgb(233,186,0)] text-black mt-5 rounded-[50px] px-10' onClick={toggleModal}>Create</button>
             </div> : <></> }
+            {show?<CreateOrgModal show={show} handleCreate={handleCreate}/>:<></>}
                 <form className='flex flex-col' onSubmit={authorize}>   
                     <div style={{backgroundImage: `url(${formData.file})`}} className="flex flex-col justify-end items-end pr-2 pb-2 overflow-y bg-[div: var(backgroundImage)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">                
                         <div className=' flex flex-col justify-end items-end max-h-[10%]'>

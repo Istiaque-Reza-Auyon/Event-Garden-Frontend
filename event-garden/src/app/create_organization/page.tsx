@@ -96,14 +96,11 @@ const page:React.FC<pageProps> = () => {
                 <input type="text" name='brandName' placeholder='Brand Name' className="border-2 border-[rgb(119,119,119)] rounded-lg w-[100%] bg-[rgb(16,17,19)] text-[15px] text-[rgb(230,232,239)] p-3 " required />
                 <p className='text-[rgb(230,232,239)] py-2 mt-5'>Add your brand's logo. (Square)</p>
                    <div className='relative'>
-                        
-                            <div className='relative'>
-                            
+                            <div className='relative'>  
                             <div style={{backgroundImage: `url(${file})`}} className=" flex flex-col justify-center items-center absolute mb-10 bg-[div: var(backgroundImage)] h-[10rem] w-[10rem] bg-contain rounded-full mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]"></div>
                             <label htmlFor="file-upload" className="text-3xl absolute ml-16 mt-36">
                                 <FaCamera style={{color:'yellow'}}/>
                                 <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={handleUpload} /></label>
-                            
                         </div>
                         <button type="submit" className='flex justify-center items-center w-[100%] mt-72 bg-[rgb(255,255,255)] rounded-full p-3 my-5 text-black'>Continue</button>
                    </div>

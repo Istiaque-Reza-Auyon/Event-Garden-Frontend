@@ -54,7 +54,6 @@ const page:React.FC<pageProps> = () => {
     const handleChange = async (e:any) => {
       setFormData((prev:any) => ({ ...prev, image: e.target.files[0] }));
       await uploadImage();
-      console.log(formData.url);
       if(formData.url) {
           setFormData((prev:any) => ({ ...prev, file: URL.createObjectURL(e.target.files[0]) }));
       }
