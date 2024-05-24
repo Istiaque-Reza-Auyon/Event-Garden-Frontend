@@ -53,7 +53,7 @@ const page:React.FC<pageProps> = () => {
             setBrandNameValid(2);
         }
     }
-console.log(url);
+
     const uploadImage = async () => {
         const data = new FormData()
         data.append("file", image)

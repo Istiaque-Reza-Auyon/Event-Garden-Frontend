@@ -18,14 +18,16 @@ const page:React.FC<pageProps> = () => {
       location: string;
       attendeeCount: number;
       description:string;
-      poster: string;}
+      poster: string;
+      users:any;
+  }
 
     const router = useRouter();
 
     const [isOpen, setIsOpen] = useState(false);
     const[price, setPrice] = useState(0);
     const[quantity, setQuantity] = useState(0);
-    const[event, setEventObject] = useState<Event>({ name: '', venue: '', date: '', location: '', attendeeCount: 0, description: '', poster: ''});
+    const[event, setEventObject] = useState<Event>({ name: '', venue: '', date: '', location: '', attendeeCount: 0, description: '', poster: '', users:[]});
     const[ticketList, setTicketList] = useState<TicketType[]|[]>([]);
 
     const pathname = usePathname();
@@ -96,7 +98,7 @@ const page:React.FC<pageProps> = () => {
 
   return (
       <>
-      {!isOpen? <EventDetails poster={event.poster} toggleMenu={toggleMenu} cart={cart} decreaseQuantity={decreaseQuantity} title={event.name}  venue={event.venue} date={event.date} location={event.location} attendeeCount={event.attendeeCount} description={event.description} setPrice={increaseQuantity} eventId={eventId} ticketList={ticketList} /> : <TicketPurchase toggleMenu={toggleMenu} price={price} quantity={quantity} cart={cart}/>}
+      {!isOpen? <EventDetails poster={event.poster} toggleMenu={toggleMenu} cart={cart} decreaseQuantity={decreaseQuantity} title={event.name}  venue={event.venue} date={event.date} location={event.location} attendeeCount={event.attendeeCount} description={event.description} setPrice={increaseQuantity} eventId={eventId} ticketList={ticketList} users={event.users}/> : <TicketPurchase toggleMenu={toggleMenu} price={price} quantity={quantity} cart={cart}/>}
       </>)
 }
 export default page;

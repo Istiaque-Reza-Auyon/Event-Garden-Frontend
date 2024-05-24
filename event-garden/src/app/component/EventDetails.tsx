@@ -18,9 +18,10 @@ type EventDetailsProps = {
     poster: string;
     setPrice: (ticket: TicketType) => void;
     decreaseQuantity: (ticket: TicketType) => void;
+    users: any;
 };
 
-const EventDetails:React.FC<EventDetailsProps> = ({toggleMenu, title, venue, date, location, attendeeCount, description, setPrice, eventId, ticketList, cart, poster, decreaseQuantity}) => {
+const EventDetails:React.FC<EventDetailsProps> = ({toggleMenu, title, venue, date, location, attendeeCount, description, setPrice, eventId, ticketList, cart, poster, decreaseQuantity,users}) => {
     
     return (
         <div className='flex flex-col bg-[rgb(16,17,19)] h-auto overflow-y-scroll pb-[7vh]'>
@@ -28,7 +29,7 @@ const EventDetails:React.FC<EventDetailsProps> = ({toggleMenu, title, venue, dat
                 <img src={poster} className="h-[100%] w-[100%] "/>
             </div>
             <div className='flex flex-col'>
-                <EventDescription toggleMenu={toggleMenu} decreaseQuantity={decreaseQuantity} title={title}  cart={cart}  venue={venue} date={date} location={location} attendeeCount={attendeeCount} description={description} setPrice={setPrice} eventId={eventId} ticketList = {ticketList}></EventDescription>
+                <EventDescription toggleMenu={toggleMenu} decreaseQuantity={decreaseQuantity} users={users} title={title}  cart={cart}  venue={venue} date={date} location={location} attendeeCount={attendeeCount} description={description} setPrice={setPrice} eventId={eventId} ticketList = {ticketList}></EventDescription>
             </div>   
         </div>
     )
