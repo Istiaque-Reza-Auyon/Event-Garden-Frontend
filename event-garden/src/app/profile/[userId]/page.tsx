@@ -37,16 +37,30 @@ const page:React.FC<pageProps> = () => {
         })
         .then(resp => resp.json())
         .then(data => {
-            setUrl(data.url)
-            console.log(data.url);
+            if (data.url) {
+                setFile(data.url);
+                const user = {profilePic : data.url};
+                console.log(data.url)
+                try{
+                    fetch(`http://localhost:5000/update/user/pic?id=${userId}`,{
+            method: "PUT",
+            body: JSON.stringify(user),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+            }).then(resp => resp.json())
+            .then(data => {if (data) console.log('successful');})
+                    } catch (e) {
+                        console.log(e);
+                    }
+            }
         })}catch(err){
-            ( console.log(err))
+            console.log(err)
         }
     }
 
     const handleUpload = async (e:any) => {
         setImage(e.target.files[0]);
-        setFile(URL.createObjectURL(e.target.files[0]));
         await uploadImage();
     }
 
@@ -67,7 +81,10 @@ const page:React.FC<pageProps> = () => {
           }
           })
           .then(resp => resp.json()).then(data => {
-            if (data!=='error parsing jwt') setUserObject(data);
+            if (data!=='error parsing jwt' && data){ 
+                setUserObject(data);
+                if(data.profilePic) setFile(data.profilePic);
+            }
             else router.push('/signin');
           })
       } catch(e) {

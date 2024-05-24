@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaCamera } from "react-icons/fa6";
@@ -16,6 +16,7 @@ const page:React.FC<pageProps> = () => {
     const [file, setFile] = useState('https://res.cloudinary.com/dvjmvqxsp/image/upload/v1715968798/samples/logo.png');
     const [url, setUrl] = useState('');
     const [image, setImage] = useState('');
+    const [orgId,setOrgId] = useState('');
     const router = useRouter();
 
     const messageMap: {[key:number] : string} = {
@@ -52,7 +53,7 @@ const page:React.FC<pageProps> = () => {
             setBrandNameValid(2);
         }
     }
-
+console.log(url);
     const uploadImage = async () => {
         const data = new FormData()
         data.append("file", image)
@@ -65,16 +66,17 @@ const page:React.FC<pageProps> = () => {
         })
         .then(resp => resp.json())
         .then(data => {
-            setUrl(data.url)
-            console.log(data.url);
+            if (data.url) {
+                setFile(data.url);
+                setUrl(data.url)
+            }
         })}catch(err){
-            ( console.log(err))
+            console.log(err)
         }
     }
 
     const handleUpload = async (e:any) => {
         setImage(e.target.files[0]);
-        setFile(URL.createObjectURL(e.target.files[0]));
         await uploadImage();
     }
 
