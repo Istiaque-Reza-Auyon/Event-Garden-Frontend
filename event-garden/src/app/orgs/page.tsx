@@ -18,7 +18,13 @@ const page:React.FC<pageProps> = () => {
     useEffect(() => {
         const getEvents = (() => {
         try{
-            fetch(`http://localhost:5000/admin/organization/find/all`)
+            fetch(`http://localhost:5000/admin/organization/find/all`,{
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
             .then(resp => resp.json()).then(data => {
                 setOrganizationList(data);
             })
@@ -29,7 +35,7 @@ const page:React.FC<pageProps> = () => {
 })
     
     return (
-            <div className ="bg-[rgb(20,21,23)] h-screen overflow-y-scroll flex flex-col">
+            <div className ="bg-[rgb(20,21,23)] h-screen overflow-y-scroll flex flex-col pb-[7vh]">
                 <h1 className='text-white px-4 py-6 pt-10 text-3xl'>My Organizations</h1>
                 <div className='flex flex-col justify-center items-center mt-6'>
                 <div className="bg-[rgb(35,35,37)] bg-cover bg-no-repeat h-[200px] w-[354px] rounded-[20px] mt-6 ">

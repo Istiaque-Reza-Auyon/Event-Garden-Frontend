@@ -31,7 +31,7 @@ const page:React.FC<pageProps> = () => {
         event.preventDefault();
 
         const formData:any = new FormData(event.target as HTMLFormElement);
-        const organization = formData.get('brandName').trim().length > 3 ? {name: formData.get('brandName'), country: formData.get('country')} : setBrandNameValid(1);
+        const organization = formData.get('brandName').trim().length > 3 ? {name: formData.get('brandName'), country: formData.get('country'), poster: url} : setBrandNameValid(1);
 
         try {
             fetch("http://localhost:5000/admin/organization/create", {

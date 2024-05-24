@@ -11,7 +11,6 @@ import { TicketType } from '../assets/interfaces';
 
 
 type CreateEventProps = {
-    ticketList : TicketType[]; 
 };
 
 
@@ -102,7 +101,6 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             }
             }).then(async (response) => {
                 const data = await response.json();
-                console.log(formData.ticketList);
                 try {
                     fetch(`http://localhost:5000/admin/event/ticket/create/${data}`, {
         
@@ -171,6 +169,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
                     {formData.ticketList.length>0 ? formData.ticketList.map((ticket:any) => <TicketBank price={ticket.price} name={ticket.name} toggleMenu={toggleMenu}/>) : <TicketBank price={formData.price} name={"Default Ticket"} toggleMenu={toggleMenu}/> }
                     <button className='flex justify-center items-center p-2 bg-[rgb(240,242,249)] text-black mt-5 rounded-[50px]' type="submit">Create Event</button>
                 </form>
+                {tryAgain === 1? <p className='flex justify-center pt-7 text-[rgb(233,0,12)] text-xl'>Please,Try again!</p> : <></>}
             </div>
     </div> 
        
