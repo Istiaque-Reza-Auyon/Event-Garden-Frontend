@@ -21,6 +21,7 @@ const page:React.FC<pageProps> = () => {
 
 
     const pathname = usePathname();
+    console.log(pathname.split('/'));
     const orgId = pathname.split('/')[2];
 
     useEffect(() => {

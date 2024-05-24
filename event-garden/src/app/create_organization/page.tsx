@@ -38,12 +38,14 @@ const page:React.FC<pageProps> = () => {
 
             method: "POST",
             body: JSON.stringify(organization),
+            credentials: 'include',
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
             }).then(async (response) => {
-                const data = await response.json()
-                data ? router.push('/organization_dashboard') : setBrandNameValid(2);
+                const data = await response.json();
+                console.log(data);
+                data ? router.push(`/org/${data}`) : setBrandNameValid(2);
             })
         } catch (e) {
             console.error(e);
@@ -80,7 +82,7 @@ const page:React.FC<pageProps> = () => {
         <div className='bg-[rgb(16,17,19)] h-screen overflow-y-scroll py-5 px-4'>
             <div className='flex justify-end pb-5'>
                 <p className='flex justify-center items-center text-[rgb(212,213,215)] font-[DM Sans] mr-1'>Already have an organization?</p>
-                <div className='flex justify-center items-center'><Link href="/my_organization" className='text-[rgb(233,186,0)] font-[DM Sans]'>My Dashboard</Link></div>
+                <div className='flex justify-center items-center'><Link href="/orgs" className='text-[rgb(233,186,0)] font-[DM Sans]'>My Dashboard</Link></div>
             </div>
             <h1 className='text-[rgb(230,232,239)] text-[34px]'>Create Organization</h1>
             <form className='flex flex-col' onSubmit={addOrganization}>
