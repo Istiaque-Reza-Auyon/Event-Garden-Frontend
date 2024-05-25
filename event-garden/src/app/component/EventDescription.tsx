@@ -21,6 +21,18 @@ type EventDescriptionProps = {
 
 const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,location,attendeeCount,description, setPrice, toggleMenu, eventId, ticketList,decreaseQuantity, cart, users}) => {
 
+    const [attendees, setAttendees] = useState([]);
+
+    console.log(attendees);
+
+    useEffect(()=> {
+        setAttendees(users.reduce((total:any, curr:any) => {
+            if (total.some((user:any) => user.orderId === curr.orderId)) return total;
+            else total.push(curr);
+            return total;
+        },[]));
+    },[users])
+
     const quantity = (ticket: TicketType) => {
        const cartTicket = cart.find(cartTicket => ticket.id === cartTicket.id);
        return cartTicket?.quantity;
@@ -38,7 +50,7 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
             <div className='flex flex-col  border-t-2 border-[rgb(230,226,214)] w-[100%]'>
                 <h1 className='text-[rgb(233,186,0)] border-top-2 border-[rgb(233,186,0)] pt-2 text-xl pb-3'>GUESTLIST</h1>
                 <div className='flex flex-row'>
-                { users?.map((user:any)=> 
+                { attendees?.map((user:any)=> 
                     <img className='size-14 rounded-full mr-1 mb-4' src={`${user.profilePic}`}/>
                 )}</div></div>
             <div className='flex justify-center items-center my-3 bg-[rgb(16,17,19)] border-yellow-400 border-2 w-[20rem] h-[5rem] rounded-full ml-7 shadow-3xl shadow-[rgb(233,235,145)] text-[rgb(250,250,252)] text-2xl'>

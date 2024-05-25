@@ -27,7 +27,7 @@ const page:React.FC<pageProps> = () => {
     const [isOpen, setIsOpen] = useState(false);
     const[price, setPrice] = useState(0);
     const[quantity, setQuantity] = useState(0);
-    const[event, setEventObject] = useState<Event>({ name: '', venue: '', date: '', location: '', attendeeCount: 0, description: '', poster: '', users:[]});
+    const[event, setEventObject] = useState<Event>({ name: '', venue: '', date: '', zone: '', attendeeCount: 0, description: '', poster: '', users:[]});
     const[ticketList, setTicketList] = useState<TicketType[]|[]>([]);
 
     const pathname = usePathname();

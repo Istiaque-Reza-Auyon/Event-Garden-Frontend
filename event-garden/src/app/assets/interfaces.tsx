@@ -58,4 +58,10 @@ interface IFormContext {
     };
     setFormData: React.Dispatch<React.SetStateAction<any>>;
 }
-export type {TicketType, IOrganization, IEvent, ICreateTicket,IFormContext}
+
+type IUser = {
+    orderId: string;
+    profilePic: string;
+}
+
+export type {TicketType, IOrganization, IEvent, ICreateTicket,IFormContext, IUser}
