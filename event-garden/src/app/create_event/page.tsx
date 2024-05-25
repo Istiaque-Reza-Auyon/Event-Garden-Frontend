@@ -21,6 +21,7 @@ const page:React.FC<pageProps> = () => {
         image: '',
         name: '',
         startTime: '',
+        saleStartTime: '',
         endTime: '',
         venue: '',
         address: '',
@@ -31,18 +32,21 @@ const page:React.FC<pageProps> = () => {
         ticketList: [{ name: 'Default Ticket', price: 10, quantity: null, startDate: null }],
       });
 
-
       
 
       const toggleMenu = () => {
         setIsOpen(!isOpen);
       };
 
+      const startDateVal = (e:any) => {
+        setFormData((prev:any) => ({ ...prev, saleStartTime: e.target.value }))
+      }
+
       const addTicket = (formEvent: any) => {
         setIsOpen(!isOpen);
         formEvent.preventDefault();
         const formData: any = new FormData(formEvent.target);
-        const ticket: ICreateTicket = formData.get('ticketName').trim().length>0 ? {name: formData.get('ticketName'), startDate: formData.get('startTime'), quantity: formData.get('quantity'), price: formData.get('price'), description: formData.get('description')} : {name: "Default Ticket", startDate: null, quantity: null, price: 10,description:''} ;
+        const ticket: ICreateTicket = formData.get('ticketName').trim().length>0 ? {name: formData.get('ticketName'), startDate: formData.saleStartTime, quantity: formData.get('quantity'), price: formData.get('price'), description: formData.get('description')} : {name: "Default Ticket", startDate: null, quantity: null, price: 10,description:''} ;
         setFormData((prev:any) => ({ ...prev, ticketList: [...prev.ticketList, ticket] }));
     };
 
@@ -78,7 +82,7 @@ const page:React.FC<pageProps> = () => {
       
       return (
         <>
-          {!isOpen? <FormContext.Provider value={{ formData, setFormData, handleChange, toggleMenu }}><CreateEvent  /> </FormContext.Provider> :<FormContext.Provider value={{ addTicket,toggleMenu }}><CreateTicket/></FormContext.Provider>}
+          {!isOpen? <FormContext.Provider value={{ formData, setFormData, handleChange, toggleMenu }}><CreateEvent  /> </FormContext.Provider> :<FormContext.Provider value={{ addTicket,toggleMenu,startDateVal }}><CreateTicket/></FormContext.Provider>}
         </>
       )
 }

@@ -3,12 +3,9 @@ import TicketBank from './TicketBank';
 import { FaCamera } from "react-icons/fa6";
 import { IOrganization } from '../assets/interfaces';
 import { FormContext } from '../create_event/page';
-import { isoToDateTimeAmPm } from '../../../utils';
 import SignInModal from '../component/SignInModal';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import CreateOrgModal from './CreateOrgModal';
-import { TicketType } from '../assets/interfaces';
 
 
 type CreateEventProps = {
@@ -90,7 +87,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         const formdata: any = new FormData(formEvent.target);
-        const event = formdata.get('name').trim().length>0 && formdata.get('venue').trim().length>0 ? {name: formdata.get('name'), startDate: formdata.get('startDate'), endDate: formdata.get('endDate'), zone: formdata.get('address'), venue: formdata.get('venue'), poster: formData.url, description: formdata.get('description')} : undefined ;
+        const event = formdata.get('name').trim().length>0 && formdata.get('venue').trim().length>0 ? {name: formdata.get('name'), startDate: formdata.get('startTime'), endDate: formdata.get('endTime'), zone: formdata.get('address'), venue: formdata.get('venue'), poster: formData.url, description: formdata.get('description')} : undefined ;
 
          
         try {
@@ -184,8 +181,8 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
                     <h3 className='text-[rgb(240,242,249)] py-2 mt-4 pl-1'>Event Details</h3>
                     <input className='p-3 pl-2 rounded-lg mb-4 bg-[rgb(43,44,44)] border-2 text-[rgb(240,242,249)] placeholder:text-[rgb(134,135,137)] text-[1.5rem] w-[100%] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="name" placeholder='My Event*' value={formData.name} onChange={(e) => setFormData((prev:any) => ({ ...prev, name: e.target.value }))} required />
                     <div className='flex'>
-                        <input className='p-3 pl-2 rounded-lg mb-4 mr-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="startTime" type="text" placeholder='Start time*' onFocus={(e) => (e.target.type = "date")} onBlur={(e) => (e.target.type = "text")} value={formData.startDate} onChange={(e) => setFormData((prev:any) => ({ ...prev, startDate: e.target.value }))}   required/>
-                        <input className='p-3 pl-2 rounded-lg mb-4 ml-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="endTime" type="text" placeholder='End time*' onFocus={(e) => (e.target.type = "date")} onBlur={(e) => (e.target.type = "text")} required value={formData.endDate} onChange={(e) => setFormData((prev:any) => ({ ...prev, endDate: e.target.value }))}/>
+                        <input className='p-3 pl-2 rounded-lg mb-4 mr-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="startTime" type="text" placeholder='Start time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} value={formData.startTime} onChange={(e) => setFormData((prev:any) => ({ ...prev, startTime: e.target.value }))}   required/>
+                        <input className='p-3 pl-2 rounded-lg mb-4 ml-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="endTime" type="text" placeholder='End time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} required value={formData.endTime} onChange={(e) => setFormData((prev:any) => ({ ...prev, endTime: e.target.value }))}/>
                     </div>
                     <input className='p-3 pl-2 rounded-lg mb-4 w-[100%] bg-[rgb(43,44,44)] border-2 text-[rgb(240,242,249)] placeholder:text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="venue" placeholder='Venue*' value={formData.venue} onChange={(e) => setFormData((prev:any) => ({ ...prev, venue: e.target.value }))} required />
                     <input className='p-3 pl-2 rounded-lg mb-4 w-[100%] bg-[rgb(43,44,44)] border-2 text-[rgb(240,242,249)] placeholder:text-[rgb(134,135,137)] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="address" placeholder='Address*' required value={formData.address} onChange={(e) => setFormData((prev:any) => ({ ...prev, address: e.target.value }))}/>

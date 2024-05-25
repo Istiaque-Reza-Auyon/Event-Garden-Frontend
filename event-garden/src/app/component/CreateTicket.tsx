@@ -9,7 +9,7 @@ type CreateTicketProps = {
 
 const CreateTicket:React.FC<CreateTicketProps> = ({}) => {
 
-    const { addTicket, toggleMenu } = useContext(FormContext);
+    const { addTicket, toggleMenu, startDateVal } = useContext(FormContext);
     
     return (
         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-3 pb-[7vh]'>
@@ -36,7 +36,7 @@ const CreateTicket:React.FC<CreateTicketProps> = ({}) => {
             </div>
             <label className='p-4 pl-0 pb-1 text-[rgb(240,242,249)] font-[DM Sans]'>Sale Period</label>
             <div className='flex'>
-                <input className='p-3 pl-2 rounded-lg mb-4 mr-1 w-[50%] bg-[rgb(43,44,44)] text-[rgb(134,135,137)] text-[20px]' name="startTime" type="text" placeholder='Start time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")}   required />
+                <input className='p-3 pl-2 rounded-lg mb-4 mr-1 w-[50%] bg-[rgb(43,44,44)] text-[rgb(134,135,137)] text-[20px]' name="startTime" type="text" placeholder='Start time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} onChange={startDateVal}   required />
                 <input className='p-3 pl-2 rounded-lg mb-4 ml-1 w-[50%] bg-[rgb(43,44,44)] text-[rgb(134,135,137)] text-[20px]' name="endTime" type="text" placeholder='End time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} required />
             </div>
             <label className='p-4 pl-0 pb-1 text-[rgb(240,242,249)] font-[DM Sans]'>Description</label>
