@@ -59,7 +59,7 @@ const SignInModal:React.FC<SignInModalProps> = ({setTokenStatus, toggleMenu}) =>
     return (
         <div className='fixed z-10'>
             <div><button className='bg-white rounded-full absolute z-20  mt-32 ml-2 ' onClick={toggleMenu}><CiCircleRemove size={24}/></button></div>
-        <div className='flex flex-col p-10 pt-5 border-2px border-red-500 absolute bg-[rgb(5,6,6)] mt-28 z-10 rounded-lg border-2 '>
+        <div className='flex flex-col p-10 pt-5 border-2px border-white absolute bg-[rgb(5,6,6)] mt-28 z-10 rounded-lg border-2 '>
             
             <h2 className='flex justify-center items-center  text-[rgb(233,186,0)] p-10 text-[40px] font-[DM Sans]'>Sign In</h2>
             <div className='flex flex-col p-5 pt-0'>

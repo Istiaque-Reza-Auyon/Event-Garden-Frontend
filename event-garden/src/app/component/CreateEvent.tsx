@@ -160,9 +160,9 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             <div className="relative">
             {!tokenStatus? <SignInModal setTokenStatus={setTokenStatus} tokenStatus={tokenStatus} toggleMenu={toggleModal}/> : <></>}
             {orgList.length>0? 
-            <div className='flex flex-col justify-center items-center fixed z-10 bg-[rgb(16,17,19)] rounded-lg border-2 max-w-[90%] border-red-500 mt-80 mx-10 py-10 '>
+            <div className='flex flex-col justify-center items-center fixed z-10 bg-[rgb(16,17,19)] rounded-lg border-2 max-w-[100%] border-white mt-80 mx-4 py-10 shadow-2xl shadow-slate-100'>
                 <label className='text-2xl p-2 text-[rgb(233,186,0)]'>Select an Organization
-                <select value={orgId}  onChange={setOrg} className=" flex justify-center items-center  bg-[rgb(16,17,19)] text-5xl text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] ">
+                <select value={orgId}  onChange={setOrg} className=" flex justify-center items-center max-w-[100%]  bg-[rgb(16,17,19)] text-xl text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] ">
                     {orgList.map((option: IOrganization)=><>
                         <option value={option.id} key={option.id} className='bg-[rgb(16,17,19)] text-[rgb(230,232,239)]'>{option.name}</option>
                     </>)}

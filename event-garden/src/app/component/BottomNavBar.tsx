@@ -72,7 +72,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
         <button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={'/'}><GoHome style={{color:'yellow'}} className='text-5xl'/></Link></button>
         {userId === 'err'?<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/signin`}><GoOrganization style={{color:'yellow'}} className='' /></Link></button>:<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/orgs`}><GoOrganization style={{color:'yellow'}} /></Link></button>}
         <button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={'/explore'}><MdOutlineTravelExplore style={{color:'yellow'}} className='text-5xl'/></Link></button>       
-        {userId === 'err'?<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/signin`}><CgProfile style={{color:'yellow'}} className='text-5xl'/></Link></button>:<button onClick={handleStatus}><Link href={`/profile/${userId}`} className='flex justify-start text-5xl'><CgProfile style={{color:'yellow'}} className='text-5xl'/></Link></button>}
+        {userId === 'err'?<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/signin`}><CgProfile style={{color:'yellow'}} className=''/></Link></button>:<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/profile/${userId}`} ><CgProfile style={{color:'yellow'}} className=''/></Link></button>}
     </div>)
 }
 export default BottomNavBar;

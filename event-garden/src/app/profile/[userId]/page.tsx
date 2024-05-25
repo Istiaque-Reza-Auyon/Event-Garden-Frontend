@@ -40,7 +40,6 @@ const page:React.FC<pageProps> = () => {
             if (data.url) {
                 setFile(data.url);
                 const user = {profilePic : data.url};
-                console.log(data.url)
                 try{
                     fetch(`http://localhost:5000/update/user/pic?id=${userId}`,{
             method: "PUT",
