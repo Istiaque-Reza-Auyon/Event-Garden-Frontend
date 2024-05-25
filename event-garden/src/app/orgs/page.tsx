@@ -26,7 +26,8 @@ const page:React.FC<pageProps> = () => {
                 }
             })
             .then(resp => resp.json()).then(data => {
-                setOrganizationList(data);
+                if (data !== 'error parsing jwt')setOrganizationList(data);
+                else setOrganizationList([]);
             })
         } catch(e) {
             console.error(e);

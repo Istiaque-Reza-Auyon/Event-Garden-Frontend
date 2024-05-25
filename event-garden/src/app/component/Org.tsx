@@ -7,7 +7,7 @@ type OrgProps = {
 };
 
 const Org:React.FC<OrgProps> = ({organizationName}) => {
-    const poster = 'https://images.posh.vip/images/b7ba76e0-7f2a-4191-87a0-cadb7ca4d062.jpg'
+    const poster = 'https://images.pexels.com/photos/956981/milky-way-starry-sky-night-sky-star-956981.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     
     return  (
         <div style={{backgroundImage: `url(${poster})`}} className=" bg-cover bg-no-repeat h-[200px] w-[354px] rounded-[20px] mt-4 ">
