@@ -53,6 +53,8 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
         <div className='bg-[rgb(43,44,44)] px-10   py-5 overflow-y-scroll h-screen'>
             <button className='p-3'><RxCross1 style={{color:'white'}} onClick={toggleMenu}/></button>
             <div className='bg-[rgb(16,17,19)] rounded-lg px-1 pb-10 mt-20 '>
+            {  credentialValid === 0 ? <></> 
+            : <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[credentialValid]}</p> }
                 <h2 className='text-[rgb(250,250,252)] pt-5 pl-3'>Your Order</h2>
                 <div className=''>
                     {cart?.map((ticket, index) => 
@@ -103,9 +105,7 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
                         </div>
                     </div>
                     <div className='w-[100%] px-3'><button className='flex justify-center items-center p-2 bg-[rgb(233,186,0)] text-black mt-5 rounded-[50px] w-[100%] ' type='submit'>Checkout</button></div>
-                </form>
-                {  credentialValid === 0 ? <></> 
-            : <p className='flex justify-center pt-7 text-[rgb(233,186,0)] text-xl '>{messageMap[credentialValid]}</p> }
+                </form>                
             </div>
         </div>
     )
