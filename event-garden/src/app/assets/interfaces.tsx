@@ -45,6 +45,7 @@ type ICreateTicket = {
     quantity: any;
     price: any;
     startDate: any;
+    description:string;
   };
 
 

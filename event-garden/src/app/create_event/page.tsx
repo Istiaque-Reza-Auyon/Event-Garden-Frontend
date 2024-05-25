@@ -42,7 +42,7 @@ const page:React.FC<pageProps> = () => {
         setIsOpen(!isOpen);
         formEvent.preventDefault();
         const formData: any = new FormData(formEvent.target);
-        const ticket: ICreateTicket = formData.get('ticketName').trim().length>0 ? {name: formData.get('ticketName'), startDate: formData.get('startTime'), quantity: formData.get('quantity'), price: formData.get('price')} : {name: "Default Ticket", startDate: null, quantity: null, price: 10} ;
+        const ticket: ICreateTicket = formData.get('ticketName').trim().length>0 ? {name: formData.get('ticketName'), startDate: formData.get('startTime'), quantity: formData.get('quantity'), price: formData.get('price'), description: formData.get('description')} : {name: "Default Ticket", startDate: null, quantity: null, price: 10,description:''} ;
         setFormData((prev:any) => ({ ...prev, ticketList: [...prev.ticketList, ticket] }));
     };
 
