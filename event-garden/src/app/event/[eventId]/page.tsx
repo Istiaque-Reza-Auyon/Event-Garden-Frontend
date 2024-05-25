@@ -15,7 +15,7 @@ const page:React.FC<pageProps> = () => {
     type Event = { name: string;
       venue: string;
       date: string;
-      location: string;
+      zone: string;
       attendeeCount: number;
       description:string;
       poster: string;
@@ -98,7 +98,7 @@ const page:React.FC<pageProps> = () => {
 
   return (
       <>
-      {!isOpen? <EventDetails poster={event.poster} toggleMenu={toggleMenu} cart={cart} decreaseQuantity={decreaseQuantity} title={event.name}  venue={event.venue} date={event.date} location={event.location} attendeeCount={event.attendeeCount} description={event.description} setPrice={increaseQuantity} eventId={eventId} ticketList={ticketList} users={event.users}/> : <TicketPurchase toggleMenu={toggleMenu} price={price} quantity={quantity} cart={cart}/>}
+      {!isOpen? <EventDetails poster={event.poster} toggleMenu={toggleMenu} cart={cart} decreaseQuantity={decreaseQuantity} title={event.name}  venue={event.venue} date={event.date} location={event.zone} attendeeCount={event.attendeeCount} description={event.description} setPrice={increaseQuantity} eventId={eventId} ticketList={ticketList} users={event.users}/> : <TicketPurchase toggleMenu={toggleMenu} price={price} quantity={quantity} cart={cart}/>}
       </>)
 }
 export default page;

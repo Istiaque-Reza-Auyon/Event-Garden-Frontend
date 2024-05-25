@@ -33,7 +33,7 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
             <p className=' text-[rgb(233,186,0)] my-2'>{date}</p>
             <div className='flex items-center '><FaLocationDot style={{ color: 'rgb(233,186,0)'}}/>  <p className=' text-[rgb(233,186,0)] my-2 mx-2'>{location}</p></div>
             <p className=' text-[rgb(233,186,0)] my-2'>{attendeeCount} + people are going</p>
-            {ticketList?.map( (ticket:TicketType) => <Ticket quantity={quantity(ticket)} ticket={ticket}  decreaseQuantity={decreaseQuantity}  title={ticket.name}  ticketPrice={ticket.price} description={'null'}  setPrice={setPrice} ></Ticket>)}
+            {ticketList?.map( (ticket:TicketType) => <Ticket quantity={quantity(ticket)} ticket={ticket}  decreaseQuantity={decreaseQuantity}  title={ticket.name}  ticketPrice={ticket.price} description={ticket.description}  setPrice={setPrice} ></Ticket>)}
             <p className='text-white text-wrap'>{description}</p>
             <div className='flex flex-col  border-t-2 border-[rgb(230,226,214)] w-[100%]'>
                 <h1 className='text-[rgb(233,186,0)] border-top-2 border-[rgb(233,186,0)] pt-2 text-xl pb-3'>GUESTLIST</h1>

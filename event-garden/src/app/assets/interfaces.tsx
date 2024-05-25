@@ -3,7 +3,8 @@ type TicketType = {"id"?: number,
 "price": number,
 "quantity": number,
 "startTime": string|null,
-"eventId": number}
+"eventId": number,
+"description": string}
 
 
 type IOrganization = {
