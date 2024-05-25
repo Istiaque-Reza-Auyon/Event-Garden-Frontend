@@ -1,14 +1,9 @@
 "use client"
 
 import React, {useState, createContext} from 'react';
-import { IFormContext } from '../assets/interfaces';
-import TicketBank from '../component/TicketBank';
-import { FaCamera } from "react-icons/fa6";
 import CreateTicket from '../component/CreateTicket';
 import { ICreateTicket } from '../assets/interfaces';
-import TicketPurchase from '../component/TicketPurchase';
 import CreateEvent from '../component/CreateEvent';
-import Cookies from 'js-cookie';
 
 
 
