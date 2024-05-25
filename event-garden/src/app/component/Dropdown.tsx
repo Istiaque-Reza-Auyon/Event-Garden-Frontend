@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 
 type DropdownProps = {
     options: readonly string[] ;
+    zone: any;
+    setZone: (e:any) => void;
 };
 
 
 
-const Dropdown:React.FC<DropdownProps> = ({options}) => {
+const Dropdown:React.FC<DropdownProps> = ({options, zone, setZone}) => {
     const [selectedOption, setSelectedOption] = useState(options[1]);
 
     const handleChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(event.target);
         setSelectedOption(event.target.value);
+        if(event.target.value == 'New York City'||event.target.value == 'Miami'||event.target.value == 'Los Angeles')handleZone(event.target.value);
       };
+
+      const handleZone = (event:string) => {
+        setZone(event);
+    }
 
     return (
     <div className='flex justify-center items-center bg-[rgb(16,17,19)]'>

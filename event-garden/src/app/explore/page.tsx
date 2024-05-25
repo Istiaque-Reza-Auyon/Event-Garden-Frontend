@@ -17,6 +17,7 @@ type pageProps = {
 const page:React.FC<pageProps> = () => {
 
     const[eventList, setEventList] = useState([]);
+    const [zone, setZone] = useState('');
 
     useEffect (() => {
         try{
@@ -26,6 +27,17 @@ const page:React.FC<pageProps> = () => {
             console.error(e);
         }
     },[])
+
+    useEffect (() => {
+        try{
+            fetch(`http://localhost:5000/explore?zone=${zone}`)
+            .then(resp => resp.json()).then(data => setEventList(data))
+        } catch(e) {
+            console.error(e);
+        }
+    },[zone])
+
+    
     
     return ( 
                 <div className='flex flex-col bg-[rgb(16,17,19)] h-screen overflow-y-scroll pb-[7vh]'>
@@ -41,17 +53,17 @@ const page:React.FC<pageProps> = () => {
                     </div>
                     <div className='flex'>
                         <div className='flex justify-center items-center bg-[rgb(16,17,19)] pb-4 w-[50%]'>
-                            <Dropdown options= {['Trending', 'Largest', 'Newest']}></Dropdown>
+                            <Dropdown options= {['Trending', 'Largest', 'Newest']} zone={zone} setZone={setZone}></Dropdown>
                             <RiArrowDropDownLine style={{ color: 'black' }}/>
                         </div>
                         <div className='flex justify-center items-center bg-[rgb(16,17,19)] pb-4 w-[50%]'>
-                            <Dropdown options= {['This Week', 'Today', 'This Month', 'Right Now']}></Dropdown>
+                            <Dropdown options= {['This Week', 'Today', 'This Month', 'Right Now']} zone={zone} setZone={setZone}></Dropdown>
                             <RiArrowDropDownLine style={{ color: 'black'}}/>
                         </div>
                     </div>
                     <div className='flex justify-center items-center bg-[rgb(16,17,19)] pb-6 w-[100%]'>
                         <p className='text-white pr-3'>in</p>
-                        <Dropdown options= {['New York City', 'Miami', 'Los Angeles']}></Dropdown>
+                        <Dropdown options= {['New York City', 'Miami', 'Los Angeles']} zone={zone} setZone={setZone}></Dropdown>
                         <RiArrowDropDownLine style={{ color: 'black'}}/>
                     </div>
                     <div className='flex flex-col items-center px-10  bg-[rgb(16,17,19)]'>
