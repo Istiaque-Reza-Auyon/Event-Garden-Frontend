@@ -1,10 +1,10 @@
 "use client"
 
 import React, {useState, useEffect } from 'react';
-import { SiAwsorganizations } from "react-icons/si";
 import { MdOutlineTravelExplore } from "react-icons/md";
-import { AiFillHome } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
+import { GoOrganization } from "react-icons/go";
+import { GoHome } from "react-icons/go";
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 
@@ -69,10 +69,10 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
     
     return (
     <div className='flex bg-transparent justify-evenly fixed bottom-0 w-screen h-[7vh] '>
-        <Link href={'/'}><AiFillHome style={{color:'yellow'}} className='text-5xl'/></Link>
-        {userId === 'err'?<button onClick={handleStatus}><Link href={`/signin`}><SiAwsorganizations style={{color:'yellow'}} className='text-5xl'/></Link></button>:<button onClick={handleStatus}><Link href={`/orgs`}><SiAwsorganizations style={{color:'yellow'}} className='text-5xl'/></Link></button>}
-        <Link href={'/explore'}><MdOutlineTravelExplore style={{color:'yellow'}} className='text-5xl'/></Link>       
-        {userId === 'err'?<button onClick={handleStatus}><Link href={`/signin`}><CgProfile style={{color:'yellow'}} className='text-5xl'/></Link></button>:<button onClick={handleStatus}><Link href={`/profile/${userId}`}><CgProfile style={{color:'yellow'}} className='text-5xl'/></Link></button>}
+        <button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={'/'}><GoHome style={{color:'yellow'}} className='text-5xl'/></Link></button>
+        {userId === 'err'?<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/signin`}><GoOrganization style={{color:'yellow'}} className='' /></Link></button>:<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/orgs`}><GoOrganization style={{color:'yellow'}} /></Link></button>}
+        <button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={'/explore'}><MdOutlineTravelExplore style={{color:'yellow'}} className='text-5xl'/></Link></button>       
+        {userId === 'err'?<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/signin`}><CgProfile style={{color:'yellow'}} className='text-5xl'/></Link></button>:<button onClick={handleStatus}><Link href={`/profile/${userId}`} className='flex justify-start text-5xl'><CgProfile style={{color:'yellow'}} className='text-5xl'/></Link></button>}
     </div>)
 }
 export default BottomNavBar;
