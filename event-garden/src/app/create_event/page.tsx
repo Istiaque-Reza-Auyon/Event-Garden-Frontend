@@ -51,14 +51,13 @@ const page:React.FC<pageProps> = () => {
     };
 
     const handleChange = async (e:any) => {
-      setFormData((prev:any) => ({ ...prev, image: e.target.files[0] }));
-      await uploadImage();
+      setFormData((prev:any) => ({ ...prev, image: e.target.files[0] }));   
       if(formData.url) {
           setFormData((prev:any) => ({ ...prev, file: URL.createObjectURL(e.target.files[0]) }));
       }
   }
 
-  const uploadImage = async () => {
+  const uploadImage = async (e:any) => {
     const data = new FormData()
 
     data.append("file", formData.image)
@@ -66,13 +65,14 @@ const page:React.FC<pageProps> = () => {
     data.append("cloud_name", "dvjmvqxsp")
 
     try {fetch("https://api.cloudinary.com/v1_1/dvjmvqxsp/image/upload",{
-        method: "POST",
+        method: "POST", 
         body: data,
        
     })
     .then(resp => resp.json())
     .then(data => {
         setFormData((prev:any) => ({ ...prev, url: data.url }));
+        handleChange(e);
         
     })}catch(err){
         ( console.log(err))
@@ -82,7 +82,7 @@ const page:React.FC<pageProps> = () => {
       
       return (
         <>
-          {!isOpen? <FormContext.Provider value={{ formData, setFormData, handleChange, toggleMenu }}><CreateEvent  /> </FormContext.Provider> :<FormContext.Provider value={{ addTicket,toggleMenu,startDateVal }}><CreateTicket/></FormContext.Provider>}
+          {!isOpen? <FormContext.Provider value={{ formData, setFormData, uploadImage, toggleMenu }}><CreateEvent  /> </FormContext.Provider> :<FormContext.Provider value={{ addTicket,toggleMenu,startDateVal }}><CreateTicket/></FormContext.Provider>}
         </>
       )
 }

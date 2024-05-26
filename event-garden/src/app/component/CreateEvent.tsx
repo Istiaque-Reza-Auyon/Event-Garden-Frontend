@@ -14,7 +14,7 @@ type CreateEventProps = {
 
 const CreateEvent:React.FC<CreateEventProps> = () => {
 
-    const { formData, setFormData, handleChange, toggleMenu } = useContext(FormContext);
+    const { formData, setFormData, toggleMenu, uploadImage } = useContext(FormContext);
     const [orgList,setOrgList] = useState<IOrganization[]>([]);
     const [orgId, setOrgId] = useState('');
     const [tryAgain, setTryAgain] = useState(0);
@@ -174,7 +174,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
                             <form className='absolute z-0 mt-[30%] justify-end items-end'>
                         <div className='mt-[90%] h-[100%] flex flex-col justify-end items-end'><label htmlFor="file-upload" className="text-5xl ">
                         <FaCamera style={{color:'yellow'}}/>
-                        <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={handleChange}/></label></div>
+                        <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={uploadImage}/></label></div>
                     </form>
                         </div>
                     </div>
