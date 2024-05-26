@@ -13,10 +13,7 @@ const page:React.FC<pageProps> = () => {
     const options: readonly string[] = ['Unites States', 'Canada', 'Mexico']
     const [selectedOption, setSelectedOption] = useState(options[1]);
     const[brandNameValid, setBrandNameValid] = useState(0);
-    const [file, setFile] = useState('https://res.cloudinary.com/dvjmvqxsp/image/upload/v1715968798/samples/logo.png');
-    const [url, setUrl] = useState('');
-    const [image, setImage] = useState('');
-    const [orgId,setOrgId] = useState('');
+    const [url, setUrl] = useState('https://res.cloudinary.com/dvjmvqxsp/image/upload/v1715968798/samples/logo.png');
     const router = useRouter();
 
     const messageMap: {[key:number] : string} = {
@@ -54,9 +51,9 @@ const page:React.FC<pageProps> = () => {
         }
     }
 
-    const uploadImage = async () => {
+    const handleUpload = async (e:any) => {
         const data = new FormData()
-        data.append("file", image)
+        data.append("file", e.target.files[0])
         data.append("upload_preset", "auyon98")
         data.append("cloud_name", "dvjmvqxsp")
 
@@ -67,7 +64,6 @@ const page:React.FC<pageProps> = () => {
         .then(resp => resp.json())
         .then(data => {
             if (data.url) {
-                setFile(data.url);
                 setUrl(data.url)
             }
         })}catch(err){
@@ -75,10 +71,7 @@ const page:React.FC<pageProps> = () => {
         }
     }
 
-    const handleUpload = async (e:any) => {
-        setImage(e.target.files[0]);
-        await uploadImage();
-    }
+   
 
     return (
         <div className='bg-[rgb(16,17,19)] h-screen overflow-y-scroll py-5 px-4'>
@@ -99,7 +92,7 @@ const page:React.FC<pageProps> = () => {
                 <p className='text-[rgb(230,232,239)] py-2 mt-5'>Add your brand's logo. (Square)</p>
                    <div className='relative'>
                             <div className='relative'>  
-                            <div style={{backgroundImage: `url(${file})`}} className=" flex flex-col justify-center items-center absolute mb-10 bg-[div: var(backgroundImage)] h-[10rem] w-[10rem] bg-contain rounded-full mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]"></div>
+                            <div style={{backgroundImage: `url(${url})`}} className=" flex flex-col justify-center items-center absolute mb-10 bg-[div: var(backgroundImage)] h-[10rem] w-[10rem] bg-contain rounded-full mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]"></div>
                             <label htmlFor="file-upload" className="text-3xl absolute ml-16 mt-36">
                                 <FaCamera style={{color:'yellow'}}/>
                                 <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={handleUpload} /></label>

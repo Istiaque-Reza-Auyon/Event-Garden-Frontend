@@ -16,9 +16,7 @@ export const FormContext = createContext<any>(undefined);
 const page:React.FC<pageProps> = () => {  
       const[isOpen, setIsOpen] = useState(false);
       const [formData, setFormData] = useState({
-        file: 'https://s3.amazonaws.com/images.posh.vip/create-event-flyer-placeholders/Default_Flyer_Placeholder.webp',
         token : false,
-        image: '',
         name: '',
         startTime: '',
         saleStartTime: '',
@@ -27,7 +25,7 @@ const page:React.FC<pageProps> = () => {
         address: '',
         category: '',
         description: '',
-        url: '',
+        url: 'https://s3.amazonaws.com/images.posh.vip/create-event-flyer-placeholders/Default_Flyer_Placeholder.webp',
         price: 10,
         ticketList: [{ name: 'Default Ticket', price: 10, quantity: null, startDate: null }],
       });
@@ -50,29 +48,23 @@ const page:React.FC<pageProps> = () => {
         setFormData((prev:any) => ({ ...prev, ticketList: [...prev.ticketList, ticket] }));
     };
 
-    const handleChange = async (e:any) => {
-      setFormData((prev:any) => ({ ...prev, image: e.target.files[0] }));   
-      if(formData.url) {
-          setFormData((prev:any) => ({ ...prev, file: URL.createObjectURL(e.target.files[0]) }));
-      }
-  }
 
-  const uploadImage = async (e:any) => {
+
+  const handleChange = async (e : any) => {
     const data = new FormData()
 
-    data.append("file", formData.image)
+    data.append("file", e.target.files[0])
     data.append("upload_preset", "auyon98")
     data.append("cloud_name", "dvjmvqxsp")
 
     try {fetch("https://api.cloudinary.com/v1_1/dvjmvqxsp/image/upload",{
-        method: "POST", 
+        method: "POST",
         body: data,
        
     })
     .then(resp => resp.json())
     .then(data => {
         setFormData((prev:any) => ({ ...prev, url: data.url }));
-        handleChange(e);
         
     })}catch(err){
         ( console.log(err))
@@ -82,7 +74,7 @@ const page:React.FC<pageProps> = () => {
       
       return (
         <>
-          {!isOpen? <FormContext.Provider value={{ formData, setFormData, uploadImage, toggleMenu }}><CreateEvent  /> </FormContext.Provider> :<FormContext.Provider value={{ addTicket,toggleMenu,startDateVal }}><CreateTicket/></FormContext.Provider>}
+          {!isOpen? <FormContext.Provider value={{ formData, setFormData, handleChange, toggleMenu }}><CreateEvent  /> </FormContext.Provider> :<FormContext.Provider value={{ addTicket,toggleMenu,startDateVal }}><CreateTicket/></FormContext.Provider>}
         </>
       )
 }

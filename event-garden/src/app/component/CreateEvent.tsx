@@ -14,7 +14,7 @@ type CreateEventProps = {
 
 const CreateEvent:React.FC<CreateEventProps> = () => {
 
-    const { formData, setFormData, toggleMenu, uploadImage } = useContext(FormContext);
+    const { formData, setFormData, handleChange, toggleMenu } = useContext(FormContext);
     const [orgList,setOrgList] = useState<IOrganization[]>([]);
     const [orgId, setOrgId] = useState('');
     const [tryAgain, setTryAgain] = useState(0);
@@ -168,13 +168,13 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             </div> : <></> }
             {show?<CreateOrgModal show={show} handleCreate={handleCreate}/>:<></>}
                 <form className='flex flex-col' onSubmit={authorize}>   
-                    <div style={{backgroundImage: `url(${formData.file})`}} className="flex flex-col justify-end items-end pr-2 pb-2 overflow-y bg-[div: var(backgroundImage)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">                
+                    <div style={{backgroundImage: `url(${formData.url})`}} className="flex flex-col justify-end items-end pr-2 pb-2 overflow-y bg-[div: var(backgroundImage)] h-[30rem] bg-cover rounded-lg mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]">                
                         <div className=' flex flex-col justify-end items-end max-h-[10%]'>
                             {formData.file == '' ? <h3 className='flex flex-col justify-center items-center text-xl text-[rgb(240,242,249)] pb-5 pt-0 px-10'>DESIGN YOUR EVENT PAGE</h3> : <></>}
                             <form className='absolute z-0 mt-[30%] justify-end items-end'>
                         <div className='mt-[90%] h-[100%] flex flex-col justify-end items-end'><label htmlFor="file-upload" className="text-5xl ">
                         <FaCamera style={{color:'yellow'}}/>
-                        <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={uploadImage}/></label></div>
+                        <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={handleChange}/></label></div>
                     </form>
                         </div>
                     </div>

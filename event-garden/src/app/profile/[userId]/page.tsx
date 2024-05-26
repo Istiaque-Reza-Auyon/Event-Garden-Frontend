@@ -15,9 +15,7 @@ type pageProps = {
 
 const page:React.FC<pageProps> = () => {
 
-    const [file, setFile] = useState('https://res.cloudinary.com/dvjmvqxsp/image/upload/v1715968798/samples/logo.png');
-    const [image, setImage] = useState('');
-    const [url, setUrl] = useState('');
+    const [url, setUrl] = useState('https://res.cloudinary.com/dvjmvqxsp/image/upload/v1715968798/samples/logo.png');
     const [userObject, setUserObject] = useState<any>();
 
     const pathname = usePathname();
@@ -25,9 +23,9 @@ const page:React.FC<pageProps> = () => {
 
     const router = useRouter();
 
-    const uploadImage = async () => {
+    const handleUpload = async (e:any) => {
         const data = new FormData()
-        data.append("file", image)
+        data.append("file",e.target.files[0])
         data.append("upload_preset", "auyon98")
         data.append("cloud_name", "dvjmvqxsp")
 
@@ -38,7 +36,7 @@ const page:React.FC<pageProps> = () => {
         .then(resp => resp.json())
         .then(data => {
             if (data.url) {
-                setFile(data.url);
+                setUrl(data.url);
                 const user = {profilePic : data.url};
                 try{
                     fetch(`http://localhost:5000/update/user/pic?id=${userId}`,{
@@ -48,7 +46,7 @@ const page:React.FC<pageProps> = () => {
                 "Content-type": "application/json; charset=UTF-8"
             }
             }).then(resp => resp.json())
-            .then(data => {if (data) console.log('successful');})
+            .then(data => {if (data) console.log("successfull");})
                     } catch (e) {
                         console.log(e);
                     }
@@ -58,10 +56,7 @@ const page:React.FC<pageProps> = () => {
         }
     }
 
-    const handleUpload = async (e:any) => {
-        setImage(e.target.files[0]);
-        await uploadImage();
-    }
+    
 
     
     useEffect(() => {    
@@ -82,7 +77,7 @@ const page:React.FC<pageProps> = () => {
           .then(resp => resp.json()).then(data => {
             if (data!=='error parsing jwt' && data){ 
                 setUserObject(data);
-                if(data.profilePic) setFile(data.profilePic);
+                if(data.profilePic) setUrl(data.profilePic);
             }
             else router.push('/signin');
           })
@@ -99,7 +94,7 @@ const page:React.FC<pageProps> = () => {
     return (
         <div className='h-screen overflow-y-scroll bg-[rgb(21,22,24)]'>
             <div className='relative flex flex-col justify-start items-center p-4 bg-[rgb(21,22,24)]'>
-                <div style={{backgroundImage: `url(${file})`}} className=" flex flex-col justify-center items-center bg-[div: var(backgroundImage)] h-[10rem] w-[10rem] bg-contain rounded-full mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]"></div>
+                <div style={{backgroundImage: `url(${url})`}} className=" flex flex-col justify-center items-center bg-[div: var(backgroundImage)] h-[10rem] w-[10rem] bg-contain rounded-full mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]"></div>
                 {/* <img src={file} className='max-h-[90%] max-w-[100%] mb-3'/> */}
                 <form className='absolute mt-[30%]  items-center'>
                     <div className='mt-[90%]'><label htmlFor="file-upload" className="text-3xl ">
