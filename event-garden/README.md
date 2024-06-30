@@ -1,1 +1,0 @@
-This is a two weeks solo project for partial fulfillment of Software Engineering Bootcamp at Project Code using React.js, Next.js, Express.js, PostgreSQL, TypeScript. It is basically an event management platform for better inclusion of event organizers and attendees in one platform.
