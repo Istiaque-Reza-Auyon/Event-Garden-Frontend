@@ -44,7 +44,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
 
     const handleStatus =  () => {
         try{
-            fetch(`/find/id`,{
+            fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {
