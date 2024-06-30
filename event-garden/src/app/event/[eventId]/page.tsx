@@ -5,9 +5,7 @@ import EventDetails from '../../component/EventDetails';
 import TicketPurchase from '../../component/TicketPurchase';
 import { useRouter, usePathname } from 'next/navigation';
 import { TicketType } from '@/app/assets/interfaces';
-import dotenv from "dotenv";
 
-dotenv.config();
 
 type pageProps = {
     
@@ -82,11 +80,11 @@ const page:React.FC<pageProps> = () => {
 
     const getEvent =(eventId:string) => {
       try{
-          fetch(`${process.env.URL}/event/${eventId}`)
+          fetch(`${process.env.NEXT_PUBLIC_URL}/event/${eventId}`)
           .then(resp => resp.json()).then(data => {
             setEventObject(data);
             try {
-              fetch(`${process.env.URL}/admin/ticket/findAll/${eventId}`).then(async (response) => {
+              fetch(`${process.env.NEXT_PUBLIC_URL}/admin/ticket/findAll/${eventId}`).then(async (response) => {
                   const ticketData = await response.json();            
                   data ? setTicketList(ticketData) : setTicketList([]);               
               })

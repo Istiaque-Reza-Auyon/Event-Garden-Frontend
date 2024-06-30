@@ -5,9 +5,7 @@ import CreateTicket from '../component/CreateTicket';
 import { ICreateTicket } from '../assets/interfaces';
 import CreateEvent from '../component/CreateEvent';
 import { FormContext } from '../assets/contextApi';
-import dotenv from "dotenv";
 
-dotenv.config();
 
 
 
@@ -56,10 +54,10 @@ const page:React.FC<pageProps> = () => {
     const data = new FormData()
 
     data.append("file", e.target.files[0])
-    data.append("upload_preset", process.env.UPLOAD_PRESET!)
-    data.append("cloud_name", process.env.UPLOAD_PRESET!)
+    data.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!)
+    data.append("cloud_name", process.env.NEXT_PUBLIC_CLOUD_NAME!)
 
-    try {fetch(process.env.CLOUDINARY_URL!,{
+    try {fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL!,{
         method: "POST",
         body: data,      
     })

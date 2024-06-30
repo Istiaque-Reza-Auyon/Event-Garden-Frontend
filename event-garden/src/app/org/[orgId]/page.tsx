@@ -8,9 +8,7 @@ import { IEvent } from '@/app/assets/interfaces';
 import Event from '@/app/component/Event';
 import { BiSolidEditAlt } from "react-icons/bi";
 import { isoToDateTimeAmPm } from '../../../../utils';
-import dotenv from "dotenv";
 
-dotenv.config();
 
 
 type pageProps = {
@@ -18,7 +16,6 @@ type pageProps = {
 };
 
 const page:React.FC<pageProps> = () => {
-
     const[eventList, setEventList] = useState<IEvent[]|[]> ();
     const[orgObject, setOrgObject] = useState<IOrganization|null> ();
     const[attendeeCount,setAttendeeCount] = useState<number>(0);
@@ -36,7 +33,7 @@ const page:React.FC<pageProps> = () => {
 
     const getOrg =(orgId:string) => {
       try{
-          fetch(`${process.env.URL}/admin/organization/find/all/${orgId}`)
+          fetch(`${process.env.NEXT_PUBLIC_URL}/admin/organization/find/all/${orgId}`)
           .then(resp => resp.json()).then(data => {
             setOrgObject(data);
             setEventList(data.events);

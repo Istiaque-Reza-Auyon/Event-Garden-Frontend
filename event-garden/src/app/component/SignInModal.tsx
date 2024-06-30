@@ -4,9 +4,7 @@ import React, {useState} from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { CiCircleRemove } from "react-icons/ci";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 type SignInModalProps = {
     setTokenStatus: (a:boolean) => void;
@@ -30,7 +28,7 @@ const SignInModal:React.FC<SignInModalProps> = ({setTokenStatus, toggleMenu}) =>
         const user = formData.get("email") && formData.get("password") ? {email: formData.get("email"), password: formData.get("password")} : null;
         
         try {
-            fetch(`${process.env.URL}/sign-in`, {
+            fetch(`${process.env.NEXT_PUBLIC_URL}/sign-in`, {
                 method: "POST",
                 body: JSON.stringify(user),
                 headers: {

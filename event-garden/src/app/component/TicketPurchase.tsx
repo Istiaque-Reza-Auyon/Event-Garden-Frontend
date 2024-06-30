@@ -3,9 +3,7 @@
 import React, { useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
 import { TicketType } from '../assets/interfaces';
-import dotenv from "dotenv";
 
-dotenv.config();
 
 type TicketPurchaseProps = {
     toggleMenu: () => void;
@@ -33,7 +31,7 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
        if(newRecord) {
         setCredentialValid(0);
         try {
-            fetch(`${process.env.URL}/checkout`, {
+            fetch(`${process.env.NEXT_PUBLIC_URL}/checkout`, {
 
             method: "POST",
             credentials: 'include',

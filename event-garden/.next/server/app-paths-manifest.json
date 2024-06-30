@@ -1,15 +1,5 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/create_organization/page": "app/create_organization/page.js",
-  "/explore/page": "app/explore/page.js",
-  "/order/[eventId]/page": "app/order/[eventId]/page.js",
-  "/edit/event/[eventId]/page": "app/edit/event/[eventId]/page.js",
-  "/event/[eventId]/page": "app/event/[eventId]/page.js",
-  "/org/[orgId]/page": "app/org/[orgId]/page.js",
-  "/orgs/page": "app/orgs/page.js",
-  "/page": "app/page.js",
-  "/profile/[userId]/page": "app/profile/[userId]/page.js",
-  "/signin/page": "app/signin/page.js",
   "/signup/page": "app/signup/page.js",
-  "/create_event/page": "app/create_event/page.js"
+  "/page": "app/page.js"
 }

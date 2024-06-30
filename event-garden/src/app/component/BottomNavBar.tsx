@@ -5,11 +5,8 @@ import { MdOutlineTravelExplore } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { GoOrganization } from "react-icons/go";
 import { GoHome } from "react-icons/go";
-import Cookies from 'js-cookie';
 import Link from 'next/link';
-import dotenv from "dotenv";
 
-dotenv.config();
 
 
 
@@ -24,7 +21,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
 
     useEffect(()=> {
         try{
-            fetch(`${process.env.URL}/find/id`,{
+            fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -47,7 +44,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
 
     const handleStatus =  () => {
         try{
-            fetch(`${process.env.URL}/find/id`,{
+            fetch(`/find/id`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {

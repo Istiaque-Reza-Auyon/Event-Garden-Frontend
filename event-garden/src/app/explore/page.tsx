@@ -9,9 +9,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from 'next/link';
 import BottomNavBar from '../component/BottomNavBar';
 import { isoToDateTimeAmPm } from '../../../utils';
-import dotenv from "dotenv";
 
-dotenv.config();
 
 type pageProps = {
     
@@ -24,7 +22,7 @@ const page:React.FC<pageProps> = () => {
 
     useEffect (() => {
         try{
-            fetch(`${process.env.URL}/explore`)
+            fetch(`${process.env.NEXT_PUBLIC_URL}/explore`)
             .then(resp => resp.json()).then(data => setEventList(data))
         } catch(e) {
             console.error(e);
@@ -33,7 +31,7 @@ const page:React.FC<pageProps> = () => {
 
     useEffect (() => {
         try{
-            fetch(`${process.env.URL}/explore?zone=${zone}`)
+            fetch(`${process.env.NEXT_PUBLIC_URL}/explore?zone=${zone}`)
             .then(resp => resp.json()).then(data => setEventList(data))
         } catch(e) {
             console.error(e);

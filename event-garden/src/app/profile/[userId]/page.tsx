@@ -8,9 +8,6 @@ import { MdEmail } from "react-icons/md";
 import { FaCrown } from "react-icons/fa";
 import { isoToDateTime } from '../../../../utils';
 import Cookies from 'js-cookie';
-import dotenv from "dotenv";
-
-dotenv.config();    
 
 type pageProps = {
     
@@ -18,7 +15,7 @@ type pageProps = {
 
 const page:React.FC<pageProps> = () => {
 
-    const [url, setUrl] = useState(`${process.env.CLOUDINARY_URL}/v1715968798/samples/logo.png`);
+    const [url, setUrl] = useState(`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1715968798/samples/logo.png`);
     const [userObject, setUserObject] = useState<any>();
 
     const pathname = usePathname();
@@ -29,10 +26,10 @@ const page:React.FC<pageProps> = () => {
     const handleUpload = async (e:any) => {
         const data = new FormData()
         data.append("file",e.target.files[0])
-        data.append("upload_preset", process.env.UPLOAD_PRESET!)
-        data.append("cloud_name", process.env.CLOUD_NAME!)
+        data.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!)
+        data.append("cloud_name", process.env.NEXT_PUBLIC_CLOUD_NAME!)
 
-        try {fetch(process.env.CLOUDINARY_URL!,{
+        try {fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL!,{
             method: "POST",
             body: data
         })
@@ -42,7 +39,7 @@ const page:React.FC<pageProps> = () => {
                 setUrl(data.url);
                 const user = {profilePic : data.url};
                 try{
-                    fetch(`${process.env.URL}/update/user/pic?id=${userId}`,{
+                    fetch(`${process.env.NEXT_PUBLIC_URL}/update/user/pic?id=${userId}`,{
             method: "PUT",
             body: JSON.stringify(user),
             headers: {
@@ -70,7 +67,7 @@ const page:React.FC<pageProps> = () => {
 
     const getEvent =(eventId:string) => {
       try{
-          fetch(`${process.env.URL}/profile/${userId}`, {
+          fetch(`${process.env.NEXT_PUBLIC_URL}/profile/${userId}`, {
           method: "GET",
           credentials: 'include',
           headers: {

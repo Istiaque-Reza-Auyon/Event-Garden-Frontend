@@ -6,9 +6,6 @@ import { FormContext } from '../assets/contextApi';
 import SignInModal from '../component/SignInModal';
 import { useRouter } from 'next/navigation';
 import CreateOrgModal from './CreateOrgModal';
-import dotenv from "dotenv";
-
-dotenv.config();
 
 type CreateEventProps = {
 };
@@ -29,7 +26,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         try{
-            fetch(`${process.env.URL}/admin/organization/find/all`,{
+            fetch(`${process.env.NEXT_PUBLIC_URL}/admin/organization/find/all`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -55,7 +52,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         try{
-            fetch(`${process.env.URL}/find/id`,{
+            fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -93,7 +90,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
 
          
         try {
-            fetch(`${process.env.URL}/admin/event/create/${Number(orgId)}`, {
+            fetch(`${process.env.NEXT_PUBLIC_URL}/admin/event/create/${Number(orgId)}`, {
 
             method: "POST",
             body: JSON.stringify(event),
@@ -103,7 +100,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             }).then(async (response) => {
                 const data = await response.json();
                 try {
-                    fetch(`${process.env.URL}/admin/event/ticket/create/${data}`, {
+                    fetch(`${process.env.NEXT_PUBLIC_URL}/admin/event/ticket/create/${data}`, {
         
                     method: "POST",
                     body: JSON.stringify(formData.ticketList),
@@ -137,7 +134,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
 
 
         try {
-            fetch(`${process.env.URL}/admin/organization/create`, {
+            fetch(`${process.env.NEXT_PUBLIC_URL}/admin/organization/create`, {
 
             method: "POST",
             body: JSON.stringify(organization),
