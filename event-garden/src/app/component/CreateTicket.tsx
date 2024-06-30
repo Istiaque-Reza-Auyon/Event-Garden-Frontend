@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import { LuDollarSign } from "react-icons/lu";
 import { RxCross1 } from "react-icons/rx";
-import { FormContext } from '../create_event/page';
+import { FormContext } from '../assets/contextApi';
 
 type CreateTicketProps = {
     

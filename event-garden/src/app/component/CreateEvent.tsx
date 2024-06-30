@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import TicketBank from './TicketBank';
 import { FaCamera } from "react-icons/fa6";
 import { IOrganization } from '../assets/interfaces';
-import { FormContext } from '../create_event/page';
+import { FormContext } from '../assets/contextApi';
 import SignInModal from '../component/SignInModal';
 import { useRouter } from 'next/navigation';
 import CreateOrgModal from './CreateOrgModal';

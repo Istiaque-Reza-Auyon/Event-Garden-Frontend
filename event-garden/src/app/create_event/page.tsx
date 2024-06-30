@@ -4,6 +4,7 @@ import React, {useState, createContext} from 'react';
 import CreateTicket from '../component/CreateTicket';
 import { ICreateTicket } from '../assets/interfaces';
 import CreateEvent from '../component/CreateEvent';
+import { FormContext } from '../assets/contextApi';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -13,8 +14,6 @@ dotenv.config();
 
 type pageProps = {
 };
-
-export const FormContext = createContext<any>(undefined);
 
 const page:React.FC<pageProps> = () => {  
       const[isOpen, setIsOpen] = useState(false);
