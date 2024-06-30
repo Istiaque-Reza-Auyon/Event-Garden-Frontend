@@ -6,6 +6,10 @@ import { IOrganization } from '../assets/interfaces';
 import { RiArrowRightDoubleFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa";
 import Link from 'next/link';
+import dotenv from "dotenv";
+
+
+dotenv.config();
 
 type pageProps = {
     
@@ -18,7 +22,7 @@ const page:React.FC<pageProps> = () => {
     useEffect(() => {
         const getEvents = (() => {
         try{
-            fetch(`http://localhost:5000/admin/organization/find/all`,{
+            fetch(`${process.env.URL}/admin/organization/find/all`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {

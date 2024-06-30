@@ -4,6 +4,9 @@ import React, {useState, createContext} from 'react';
 import CreateTicket from '../component/CreateTicket';
 import { ICreateTicket } from '../assets/interfaces';
 import CreateEvent from '../component/CreateEvent';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 
@@ -54,13 +57,12 @@ const page:React.FC<pageProps> = () => {
     const data = new FormData()
 
     data.append("file", e.target.files[0])
-    data.append("upload_preset", "auyon98")
-    data.append("cloud_name", "dvjmvqxsp")
+    data.append("upload_preset", process.env.UPLOAD_PRESET!)
+    data.append("cloud_name", process.env.UPLOAD_PRESET!)
 
-    try {fetch("https://api.cloudinary.com/v1_1/dvjmvqxsp/image/upload",{
+    try {fetch(process.env.CLOUDINARY_URL!,{
         method: "POST",
-        body: data,
-       
+        body: data,      
     })
     .then(resp => resp.json())
     .then(data => {

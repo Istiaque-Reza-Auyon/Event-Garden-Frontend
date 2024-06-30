@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation';
 import { IEvent } from '@/app/assets/interfaces';
 import { CiCircleRemove } from "react-icons/ci";
 import Link from 'next/link';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 type pageProps = {
     
@@ -26,7 +29,7 @@ const page:React.FC<pageProps> = () => {
 
     const getEvent =(orgId:string) => {
       try{
-          fetch(`http://localhost:5000/event/${eventId}`)
+          fetch(`${process.env.URL}/event/${eventId}`)
           .then(resp => resp.json()).then(data => {
             setEventObject(data);
           })

@@ -8,6 +8,9 @@ import { IEvent } from '@/app/assets/interfaces';
 import Event from '@/app/component/Event';
 import { BiSolidEditAlt } from "react-icons/bi";
 import { isoToDateTimeAmPm } from '../../../../utils';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 type pageProps = {
@@ -33,7 +36,7 @@ const page:React.FC<pageProps> = () => {
 
     const getOrg =(orgId:string) => {
       try{
-          fetch(`http://localhost:5000/admin/organization/find/all/${orgId}`)
+          fetch(`${process.env.URL}/admin/organization/find/all/${orgId}`)
           .then(resp => resp.json()).then(data => {
             setOrgObject(data);
             setEventList(data.events);

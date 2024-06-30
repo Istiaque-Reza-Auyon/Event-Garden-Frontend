@@ -4,6 +4,9 @@ import React, {useState} from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 type SignInFormProps = {
     
@@ -21,7 +24,7 @@ const SignInForm:React.FC<SignInFormProps> = () => {
         const user = formData.get("email") && formData.get("password") ? {email: formData.get("email"), password: formData.get("password")} : null;
         
         try {
-            fetch("http://localhost:5000/sign-in", {
+            fetch(`${process.env.URL}/sign-in`, {
                 method: "POST",
                 body: JSON.stringify(user),
                 headers: {

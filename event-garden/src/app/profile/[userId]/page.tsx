@@ -7,7 +7,10 @@ import Link from 'next/link';
 import { MdEmail } from "react-icons/md";
 import { FaCrown } from "react-icons/fa";
 import { isoToDateTime } from '../../../../utils';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import dotenv from "dotenv";
+
+dotenv.config();    
 
 type pageProps = {
     
@@ -15,7 +18,7 @@ type pageProps = {
 
 const page:React.FC<pageProps> = () => {
 
-    const [url, setUrl] = useState('https://res.cloudinary.com/dvjmvqxsp/image/upload/v1715968798/samples/logo.png');
+    const [url, setUrl] = useState(`${process.env.CLOUDINARY_URL}/v1715968798/samples/logo.png`);
     const [userObject, setUserObject] = useState<any>();
 
     const pathname = usePathname();
@@ -26,10 +29,10 @@ const page:React.FC<pageProps> = () => {
     const handleUpload = async (e:any) => {
         const data = new FormData()
         data.append("file",e.target.files[0])
-        data.append("upload_preset", "auyon98")
-        data.append("cloud_name", "dvjmvqxsp")
+        data.append("upload_preset", process.env.UPLOAD_PRESET!)
+        data.append("cloud_name", process.env.CLOUD_NAME!)
 
-        try {fetch("https://api.cloudinary.com/v1_1/dvjmvqxsp/image/upload",{
+        try {fetch(process.env.CLOUDINARY_URL!,{
             method: "POST",
             body: data
         })
@@ -39,7 +42,7 @@ const page:React.FC<pageProps> = () => {
                 setUrl(data.url);
                 const user = {profilePic : data.url};
                 try{
-                    fetch(`http://localhost:5000/update/user/pic?id=${userId}`,{
+                    fetch(`${process.env.URL}/update/user/pic?id=${userId}`,{
             method: "PUT",
             body: JSON.stringify(user),
             headers: {
@@ -67,7 +70,7 @@ const page:React.FC<pageProps> = () => {
 
     const getEvent =(eventId:string) => {
       try{
-          fetch(`http://localhost:5000/profile/${userId}`, {
+          fetch(`${process.env.URL}/profile/${userId}`, {
           method: "GET",
           credentials: 'include',
           headers: {

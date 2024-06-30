@@ -4,6 +4,9 @@ import React, { useState, useEffect} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaCamera } from "react-icons/fa6";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 type pageProps = {
 
@@ -13,7 +16,7 @@ const page:React.FC<pageProps> = () => {
     const options: readonly string[] = ['Unites States', 'Canada', 'Mexico']
     const [selectedOption, setSelectedOption] = useState(options[1]);
     const[brandNameValid, setBrandNameValid] = useState(0);
-    const [url, setUrl] = useState('https://res.cloudinary.com/dvjmvqxsp/image/upload/v1715968798/samples/logo.png');
+    const [url, setUrl] = useState(`${process.env.CLOUDINARY_URL}/v1715968798/samples/logo.png`);
     const router = useRouter();
 
     const messageMap: {[key:number] : string} = {
@@ -32,7 +35,7 @@ const page:React.FC<pageProps> = () => {
         const organization = formData.get('brandName').trim().length > 3 ? {name: formData.get('brandName'), country: formData.get('country'), poster: url} : setBrandNameValid(1);
 
         try {
-            fetch("http://localhost:5000/admin/organization/create", {
+            fetch(`${process.env.URL}/admin/organization/create`, {
 
             method: "POST",
             body: JSON.stringify(organization),
@@ -54,10 +57,10 @@ const page:React.FC<pageProps> = () => {
     const handleUpload = async (e:any) => {
         const data = new FormData()
         data.append("file", e.target.files[0])
-        data.append("upload_preset", "auyon98")
-        data.append("cloud_name", "dvjmvqxsp")
+        data.append("upload_preset", process.env.UPLOAD_PRESET!)
+        data.append("cloud_name", process.env.CLOUD_NAME!)
 
-        try {fetch("https://api.cloudinary.com/v1_1/dvjmvqxsp/image/upload",{
+        try {fetch(process.env.CLOUDINARY_URL!,{
             method: "POST",
             body: data
         })

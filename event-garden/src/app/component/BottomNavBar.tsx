@@ -7,6 +7,9 @@ import { GoOrganization } from "react-icons/go";
 import { GoHome } from "react-icons/go";
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 
@@ -21,7 +24,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
 
     useEffect(()=> {
         try{
-            fetch(`http://localhost:5000/find/id`,{
+            fetch(`${process.env.URL}/find/id`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -44,7 +47,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
 
     const handleStatus =  () => {
         try{
-            fetch("http://localhost:5000/find/id",{
+            fetch(`${process.env.URL}/find/id`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {

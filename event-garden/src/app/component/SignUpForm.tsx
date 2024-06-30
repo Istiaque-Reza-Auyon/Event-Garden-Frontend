@@ -3,6 +3,9 @@
 import React, {useState} from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 type SignUpFormProps = {
@@ -38,7 +41,7 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
         : setEmailValid(7)
         
        if (newUser) { try {
-            fetch("http://localhost:5000/sign-up", {
+            fetch(`${process.env.URL}/sign-up`, {
 
             method: "POST",
             body: JSON.stringify(newUser),

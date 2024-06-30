@@ -6,7 +6,9 @@ import { FormContext } from '../create_event/page';
 import SignInModal from '../component/SignInModal';
 import { useRouter } from 'next/navigation';
 import CreateOrgModal from './CreateOrgModal';
+import dotenv from "dotenv";
 
+dotenv.config();
 
 type CreateEventProps = {
 };
@@ -27,7 +29,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         try{
-            fetch("http://localhost:5000/admin/organization/find/all",{
+            fetch(`${process.env.URL}/admin/organization/find/all`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -53,7 +55,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         formEvent.preventDefault();
 
         try{
-            fetch("http://localhost:5000/find/id",{
+            fetch(`${process.env.URL}/find/id`,{
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -91,7 +93,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
 
          
         try {
-            fetch(`http://localhost:5000/admin/event/create/${Number(orgId)}`, {
+            fetch(`${process.env.URL}/admin/event/create/${Number(orgId)}`, {
 
             method: "POST",
             body: JSON.stringify(event),
@@ -101,7 +103,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
             }).then(async (response) => {
                 const data = await response.json();
                 try {
-                    fetch(`http://localhost:5000/admin/event/ticket/create/${data}`, {
+                    fetch(`${process.env.URL}/admin/event/ticket/create/${data}`, {
         
                     method: "POST",
                     body: JSON.stringify(formData.ticketList),
@@ -135,7 +137,7 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
 
 
         try {
-            fetch("http://localhost:5000/admin/organization/create", {
+            fetch(`${process.env.URL}/admin/organization/create`, {
 
             method: "POST",
             body: JSON.stringify(organization),
