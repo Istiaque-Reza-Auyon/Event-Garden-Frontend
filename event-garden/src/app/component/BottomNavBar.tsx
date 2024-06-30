@@ -20,6 +20,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
     const[userId, setUserId] = useState('err');
 
     useEffect(()=> {
+        console.log(userId);
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
@@ -43,6 +44,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
     }, [])
 
     const handleStatus =  () => {
+        console.log(userId);
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
