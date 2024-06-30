@@ -50,7 +50,7 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
                 const data = await response.json()
                 if (data !== 'error' && data !== 'email already exists') {
                     setEmailValid(1);
-                    Cookies.set('token', data , {expires: 7});
+                    // Cookies.set('token', data , {expires: 7});
                 }
                 else if(data === 'email already exists') {
                     setEmailValid(2);

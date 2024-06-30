@@ -5,6 +5,7 @@ import { MdOutlineTravelExplore } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { GoOrganization } from "react-icons/go";
 import { GoHome } from "react-icons/go";
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 
 
@@ -20,7 +21,7 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
     const[userId, setUserId] = useState('err');
 
     useEffect(()=> {
-        console.log(userId);
+        console.log(Cookies.get('token'));
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
