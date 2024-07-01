@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { GoOrganization } from "react-icons/go";
 import { GoHome } from "react-icons/go";
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 
 
@@ -23,9 +24,10 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
-                credentials: 'include',
+                // credentials: 'include',
                 headers: {
-                    "Content-type": "application/json; charset=UTF-8"
+                    "Content-type": "application/json; charset=UTF-8",
+                    "token": `${Cookies.get('token')}`
                 }
             })
             .then(resp => resp.json())
@@ -46,9 +48,10 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
-                credentials: 'include',
+                // credentials: 'include',
                 headers: {
-                    "Content-type": "application/json; charset=UTF-8"
+                    "Content-type": "application/json; charset=UTF-8",
+                    "token": `${Cookies.get('token')}`
                 }
             })
             .then(resp => resp.json())
