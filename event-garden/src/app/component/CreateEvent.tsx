@@ -6,6 +6,7 @@ import { FormContext } from '../assets/contextApi';
 import SignInModal from '../component/SignInModal';
 import { useRouter } from 'next/navigation';
 import CreateOrgModal from './CreateOrgModal';
+import Cookies from 'js-cookie';
 
 type CreateEventProps = {
 };
@@ -28,9 +29,10 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/admin/organization/find/all`,{
                 method: "GET",
-                credentials: 'include',
+                // credentials: 'include',
                 headers: {
-                    "Content-type": "application/json; charset=UTF-8"
+                    "Content-type": "application/json; charset=UTF-8",
+                    "token": `${Cookies.get('token')}`
                 }
             })
             .then(resp => resp.json())
@@ -54,9 +56,10 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`,{
                 method: "GET",
-                credentials: 'include',
+                // credentials: 'include',
                 headers: {
-                    "Content-type": "application/json; charset=UTF-8"
+                    "Content-type": "application/json; charset=UTF-8",
+                    "token": `${Cookies.get('token')}`
                 }
             })
             .then(resp => resp.json())
@@ -138,9 +141,10 @@ const CreateEvent:React.FC<CreateEventProps> = () => {
 
             method: "POST",
             body: JSON.stringify(organization),
-            credentials: 'include',
+            // credentials: 'include',
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "token": `${Cookies.get('token')}`
             }
             }).then(async (response) => {
                 const data = await response.json();

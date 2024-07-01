@@ -23,8 +23,6 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
 
     const [attendees, setAttendees] = useState([]);
 
-    console.log(attendees);
-
     useEffect(()=> {
         setAttendees(users.reduce((total:any, curr:any) => {
             if (total.some((user:any) => user.orderId === curr.orderId)) return total;

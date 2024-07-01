@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
 import { TicketType } from '../assets/interfaces';
+import Cookies from 'js-cookie';
 
 
 type TicketPurchaseProps = {
@@ -34,10 +35,11 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
             fetch(`${process.env.NEXT_PUBLIC_URL}/checkout`, {
 
             method: "POST",
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify(newRecord),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "token": `${Cookies.get('token')}`
             }
             }).then(async (response) => {
                 const data = await response.json();

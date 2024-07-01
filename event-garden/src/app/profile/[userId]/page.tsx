@@ -69,9 +69,10 @@ const page:React.FC<pageProps> = () => {
       try{
           fetch(`${process.env.NEXT_PUBLIC_URL}/profile/${userId}`, {
           method: "GET",
-          credentials: 'include',
+        //   credentials: 'include',
           headers: {
-              "Content-type": "application/json; charset=UTF-8"
+              "Content-type": "application/json; charset=UTF-8",
+              "token": `${Cookies.get('token')}`
           }
           })
           .then(resp => resp.json()).then(data => {

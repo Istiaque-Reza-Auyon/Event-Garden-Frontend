@@ -4,6 +4,7 @@ import React, { useState, useEffect} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaCamera } from "react-icons/fa6";
+import Cookies from 'js-cookie';
 
 
 type pageProps = {
@@ -37,13 +38,13 @@ const page:React.FC<pageProps> = () => {
 
             method: "POST",
             body: JSON.stringify(organization),
-            credentials: 'include',
+            // credentials: 'include',
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "token": `${Cookies.get('token')}`
             }
             }).then(async (response) => {
                 const data = await response.json();
-                console.log(data);
                 data ? router.push(`/org/${data}`) : setBrandNameValid(2);
             })
         } catch (e) {

@@ -6,6 +6,7 @@ import { IOrganization } from '../assets/interfaces';
 import { RiArrowRightDoubleFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa";
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 type pageProps = {
     
@@ -20,9 +21,10 @@ const page:React.FC<pageProps> = () => {
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/admin/organization/find/all`,{
                 method: "GET",
-                credentials: 'include',
+                // credentials: 'include',
                 headers: {
-                    "Content-type": "application/json; charset=UTF-8"
+                    "Content-type": "application/json; charset=UTF-8",
+                    "token": `${Cookies.get('token')}`
                 }
             })
             .then(resp => resp.json()).then(data => {

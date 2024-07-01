@@ -16,16 +16,6 @@ const FileUploadComponent = () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append('file', selectedFile);
-
-      // Example: Send formData to the server using Axios
-      // axios.post('/upload', formData)
-      //   .then(response => {
-      //     console.log(response.data);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error uploading file:', error);
-      //   });
-
       // Reset selected file state after upload
       setSelectedFile(null);
     }

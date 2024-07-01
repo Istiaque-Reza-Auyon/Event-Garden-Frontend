@@ -31,7 +31,7 @@ const SignInForm:React.FC<SignInFormProps> = () => {
                 const data = await response.json()
                 if (data) {
                     setStatus(0);
-                    Cookies.set('token', data , {expires: 7});
+                    // Cookies.set('token', data , {expires: 7});
                     router.push('/explore');
                 }
                 else {
