@@ -38,13 +38,12 @@ const SignInModal:React.FC<SignInModalProps> = ({setTokenStatus, toggleMenu}) =>
                 response.json())
                 .then(data => {
                 if (data) {
-                    // Cookies.set('token', data , {expires: 7});
-                    setTokenStatus(true);            
+                    Cookies.set('token', data , {expires: 7});
+                    setTokenStatus(true);
                 }
                 else {
                     setTokenStatus(false);
-                    setMessage(1);
-                    
+                    setMessage(1); 
                 }
         });
             }
