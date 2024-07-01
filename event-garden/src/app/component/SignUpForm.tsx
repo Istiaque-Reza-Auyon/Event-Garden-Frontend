@@ -39,6 +39,7 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
         : setEmailValid(7)
         
        if (newUser) { try {
+        console.log(process.env.NEXT_PUBLIC_URL);
             fetch(`${process.env.NEXT_PUBLIC_URL}/sign-up`, {
 
             method: "POST",
