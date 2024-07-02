@@ -46,9 +46,9 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
                 if(data) setCredentialValid(2);
             })
         } catch (e) {
-           console.log(`failed because ${e}`);
+           `failed because ${e}`;
         }
-       } else (console.log('failed'))
+       } else 'failed';
     }
 
     

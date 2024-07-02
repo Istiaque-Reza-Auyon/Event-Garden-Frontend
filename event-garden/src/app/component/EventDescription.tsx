@@ -51,7 +51,7 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
                 { attendees?.map((user:any)=> 
                     <img className='size-14 rounded-full mr-1 mb-4' src={`${user.profilePic}`}/>
                 )}</div></div>
-            <div className='flex justify-center items-center my-3 bg-[rgb(16,17,19)] border-yellow-400 border-2 w-[20rem] h-[5rem] rounded-full ml-7 shadow-3xl shadow-[rgb(233,235,145)] text-[rgb(250,250,252)] text-2xl'>
+            <div className='flex justify-center items-center my-3 bg-[rgb(16,17,19)] border-yellow-400 border-2  h-[5rem] rounded-full w-[90vw] shadow-3xl shadow-[rgb(233,235,145)] text-[rgb(250,250,252)] text-2xl'>
                 <button onClick={toggleMenu}>Checkout</button>
             </div>
         </div>

@@ -69,7 +69,7 @@ const page:React.FC<pageProps> = () => {
                 setUrl(data.url)
             }
         })}catch(err){
-            console.log(err)
+            err
         }
     }
 

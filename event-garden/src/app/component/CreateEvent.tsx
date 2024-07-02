@@ -14,7 +14,7 @@ type CreateEventProps = {
 
 const CreateEvent: React.FC<CreateEventProps> = () => {
 
-    const { formData, setFormData, handleChange, toggleMenu } = useContext(FormContext);
+    const { formData, setFormData, handleChange, toggleMenu, setLoader } = useContext(FormContext);
     const [orgList, setOrgList] = useState<IOrganization[]>([]);
     const [orgId, setOrgId] = useState('');
     const [tryAgain, setTryAgain] = useState(0);
@@ -27,6 +27,7 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
     useEffect(() => {
         if (orgId && eventData) {
           addEvent(eventData);
+          setLoader(true);
         }
       }, [orgId]);
 
@@ -75,7 +76,6 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
             })
                 .then(resp => resp.json())
                 .then(data => {
-                    console.log(data)
                     if (data !== 'error parsing jwt') {
                         if (orgId == '') {
                             allocateOrg();
@@ -84,7 +84,6 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
                         else addEvent(formEvent);
                     }
                     else {
-                        console.log('here')
                         setTokenStatus(false);
                     }
                 })
@@ -107,7 +106,6 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
     //     addEvent(eventData);
     // }
 
-    console.log(eventData, tokenStatus);
     const addEvent = async (formEvent: any) => {
         let event;
         if (formEvent !== eventData) {
@@ -150,7 +148,7 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
                 } catch (e) {
                     console.error(e);
                 }
-                data ? router.push(`/event/${data}`) : console.log('failed');
+                data ? router.push(`/event/${data}`) : 'failed';
             })
         } catch (e) {
             console.error(e);
@@ -183,7 +181,6 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
             }).then(async (response) => {
                return await response.json();
             }).then((data) => {
-                console.log(data);
                 setOrgId(() => data);
             })
         } catch (e) {
@@ -193,11 +190,11 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
 
 
     return (
-        <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-5 pb-[7vh]'>
-            <div className="relative">
+        <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)]  pb-[7vh]'>
+            <div className="relative w-[90vw] ml-[5vw] ">
                 {!tokenStatus ? <SignInModal allocateOrg={allocateOrg} orgList={orgList} setShow={setShow} setTokenStatus={setTokenStatus} tokenStatus={tokenStatus} toggleMenu={toggleModal} /> : <></>}
                 {orgList.length > 0 ?
-                    <div className='flex flex-col justify-center items-center fixed z-10 bg-[rgb(16,17,19)] rounded-lg border-2 max-w-[100%] border-white mt-80 mx-4 py-10 shadow-2xl shadow-slate-100'>
+                    <div className='flex flex-col justify-center items-center fixed z-10 bg-[rgb(16,17,19)] rounded-lg border-2 w-[80vw] border-white mt-[35vh] ml-[5vw] py-10 shadow-2xl shadow-slate-100'>
                         <label className='text-2xl p-2 text-[rgb(233,186,0)]'>Select an Organization
                             <select value={orgId} onChange={setOrg} className=" flex justify-center items-center max-w-[100%]  bg-[rgb(16,17,19)] text-xl text-[rgb(230,232,239)] hover:text-[rgb(0,204,255)] ">
                                 {orgList.map((option: IOrganization) => <>
@@ -221,8 +218,8 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
                     <h3 className='text-[rgb(240,242,249)] py-2 mt-4 pl-1'>Event Details</h3>
                     <input className='p-3 pl-2 rounded-lg mb-4 bg-[rgb(43,44,44)] border-2 text-[rgb(240,242,249)] placeholder:text-[rgb(134,135,137)] text-[1.5rem] w-[100%] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="name" placeholder='My Event*' value={formData.name} onChange={(e) => setFormData((prev: any) => ({ ...prev, name: e.target.value }))} required />
                     <div className='flex'>
-                        <input className='p-3 pl-2 rounded-lg mb-4 mr-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="startTime" type="text" placeholder='Start time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} value={formData.startTime} onChange={(e) => setFormData((prev: any) => ({ ...prev, startTime: e.target.value }))} required />
-                        <input className='p-3 pl-2 rounded-lg mb-4 ml-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="endTime" type="text" placeholder='End time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} required value={formData.endTime} onChange={(e) => setFormData((prev: any) => ({ ...prev, endTime: e.target.value }))} />
+                        <input className='p-3 pl-2 rounded-lg mb-4 mr-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-xl border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="startTime" type="text" placeholder='Start time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} value={formData.startTime} onChange={(e) => setFormData((prev: any) => ({ ...prev, startTime: e.target.value }))} required />
+                        <input className='p-3 pl-2 rounded-lg mb-4 ml-1 w-[50%] bg-[rgb(43,44,44)] border-2 text-[rgb(134,135,137)] text-xl border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="endTime" type="text" placeholder='End time*' onFocus={(e) => (e.target.type = "datetime-local")} onBlur={(e) => (e.target.type = "text")} required value={formData.endTime} onChange={(e) => setFormData((prev: any) => ({ ...prev, endTime: e.target.value }))} />
                     </div>
                     <input className='p-3 pl-2 rounded-lg mb-4 w-[100%] bg-[rgb(43,44,44)] border-2 text-[rgb(240,242,249)] placeholder:text-[rgb(134,135,137)] text-[20px] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="venue" placeholder='Venue*' value={formData.venue} onChange={(e) => setFormData((prev: any) => ({ ...prev, venue: e.target.value }))} required />
                     <input className='p-3 pl-2 rounded-lg mb-4 w-[100%] bg-[rgb(43,44,44)] border-2 text-[rgb(240,242,249)] placeholder:text-[rgb(134,135,137)] border-[rgb(233,186,0)] shadow-custom1 shadow-[rgb(233,186,0)]' name="address" placeholder='Address*' required value={formData.address} onChange={(e) => setFormData((prev: any) => ({ ...prev, address: e.target.value }))} />

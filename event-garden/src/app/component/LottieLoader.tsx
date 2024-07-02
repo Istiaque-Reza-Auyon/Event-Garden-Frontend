@@ -17,7 +17,7 @@ const LottieLoader: React.FC<LottieLoaderProps> = () => {
     };
 
     return (
-        <div>
+        <div className='bg-black h-screen overflow-y-scroll pt-[20vh]'>
             <Lottie
                 options={defaultOptions}
                 height={400}
@@ -26,4 +26,4 @@ const LottieLoader: React.FC<LottieLoaderProps> = () => {
         </div>
     );
 }
-    export default LottieLoader;
+export default LottieLoader;

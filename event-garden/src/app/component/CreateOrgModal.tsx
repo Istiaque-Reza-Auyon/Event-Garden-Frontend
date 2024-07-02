@@ -9,7 +9,7 @@ const CreateOrgModal:React.FC<CreateOrgModalProps> = ({show,handleCreate}) => {
     
     return (
       <div className='flex justify-center '>
-        <div className= 'fixed z-10 mt-80'>
+        <div className= 'fixed z-10 mt-[35vh]'>
             <form onSubmit={handleCreate}>
       <div className="modal-overlay inset-0 bg-black opacity-50"></div>
       <div className="modal-container bg-black w-[100%] md:max-w-md rounded z-50 overflow-y-auto border-2  border-white  shadow-2xl shadow-slate-100 py-4 px-2">

@@ -46,13 +46,13 @@ const page:React.FC<pageProps> = () => {
                 "Content-type": "application/json; charset=UTF-8"
             }
             }).then(resp => resp.json())
-            .then(data => {if (data) console.log("successfull");})
+            .then(data => {if (data) "successfull";})
                     } catch (e) {
-                        console.log(e);
+                        e;
                     }
             }
         })}catch(err){
-            console.log(err)
+            err;
         }
     }
 

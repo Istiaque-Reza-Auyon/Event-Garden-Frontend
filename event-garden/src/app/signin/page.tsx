@@ -13,7 +13,7 @@ type signInPageProps = {
 const signInPage:React.FC<signInPageProps> = () => {  
     const [loader, setLoader]  = useState(false);
     return ( 
-    <div className='bg-black h-screen'>
+    <div className='h-screen overflow-y-scroll bg-black'>
         {loader?<LottieLoader/>:<SignInForm setLoader={setLoader}></SignInForm>}
     </div>
 )}
