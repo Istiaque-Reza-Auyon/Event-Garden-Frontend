@@ -4,15 +4,19 @@ import React, {useState} from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { CiCircleRemove } from "react-icons/ci";
+import { IOrganization } from '../assets/interfaces';
 
 
 type SignInModalProps = {
     setTokenStatus: (a:boolean) => void;
     tokenStatus: boolean;
     toggleMenu: () => void;
+    setShow: (status: boolean) => void;
+    orgList : IOrganization[];
+    allocateOrg: () => IOrganization[] | void;
 };
 
-const SignInModal:React.FC<SignInModalProps> = ({setTokenStatus, toggleMenu}) => {
+const SignInModal:React.FC<SignInModalProps> = ({setTokenStatus, toggleMenu, setShow, orgList, allocateOrg}) => {
 
     const [message, setMessage] = useState(0);
 
@@ -40,6 +44,9 @@ const SignInModal:React.FC<SignInModalProps> = ({setTokenStatus, toggleMenu}) =>
                 if (data) {
                     Cookies.set('token', data , {expires: 7});
                     setTokenStatus(true);
+                    console.log(orgList);
+                    const orgs = allocateOrg();
+                    if(orgs?.length === 0) setShow(true);
                 }
                 else {
                     setTokenStatus(false);

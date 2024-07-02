@@ -20,11 +20,17 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
     const [tryAgain, setTryAgain] = useState(0);
     const [tokenStatus, setTokenStatus] = useState(true);
     const [show, setShow] = useState(false);
+    const [eventData, setEventData] = useState({});
 
     const router = useRouter();
 
-    const allocateOrg = (formEvent: any) => {
-        formEvent.preventDefault();
+    useEffect(() => {
+        if (orgId && eventData) {
+          addEvent(eventData);
+        }
+      }, [orgId]);
+
+    const allocateOrg = () => {
 
         try {
             fetch(`${process.env.NEXT_PUBLIC_URL}/admin/organization/find/all`, {
@@ -40,6 +46,7 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
                     if (data.length == 0) setShow(true);
                     if (data !== 'Error finding all organizations') {
                         setOrgList(data);
+                        return data;
                     }
                     else {
                         setTokenStatus(false);
@@ -54,6 +61,9 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
     const authorize = (formEvent: any) => {
         formEvent.preventDefault();
 
+        const formdata: any = new FormData(formEvent.target);
+        const event = formdata.get('name').trim().length > 0 && formdata.get('venue').trim().length > 0 ? { name: formdata.get('name'), startDate: formdata.get('startTime'), endDate: formdata.get('endTime'), zone: formdata.get('address'), venue: formdata.get('venue'), poster: formData.url, description: formdata.get('description') } : undefined;
+        setEventData(event!);
         try {
             fetch(`${process.env.NEXT_PUBLIC_URL}/find/id`, {
                 method: "GET",
@@ -65,14 +75,16 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
             })
                 .then(resp => resp.json())
                 .then(data => {
+                    console.log(data)
                     if (data !== 'error parsing jwt') {
                         if (orgId == '') {
-                            allocateOrg(formEvent);
+                            allocateOrg();
                             setTokenStatus(true);
                         }
                         else addEvent(formEvent);
                     }
                     else {
+                        console.log('here')
                         setTokenStatus(false);
                     }
                 })
@@ -88,12 +100,30 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
         if (orgList.length > 0) setOrgList([]);
     }
 
+    // const handleAlternateCreate = () => {
+    //     if (orgList.length == 1) setOrgId(String(orgList[0].id));
+    //     if (!tokenStatus) setTokenStatus(true);
+    //     if (orgList.length > 0) setOrgList([]);
+    //     addEvent(eventData);
+    // }
 
+    console.log(eventData, tokenStatus);
     const addEvent = async (formEvent: any) => {
-        formEvent.preventDefault();
+        let event;
+        if (formEvent !== eventData) {
+            formEvent.preventDefault();
 
-        const formdata: any = new FormData(formEvent.target);
-        const event = formdata.get('name').trim().length > 0 && formdata.get('venue').trim().length > 0 ? { name: formdata.get('name'), startDate: formdata.get('startTime'), endDate: formdata.get('endTime'), zone: formdata.get('address'), venue: formdata.get('venue'), poster: formData.url, description: formdata.get('description') } : undefined;
+            const formdata: any = new FormData(formEvent.target);
+            event = formdata.get('name').trim().length > 0 && formdata.get('venue').trim().length > 0 ? {
+                name: formdata.get('name'),
+                startDate: formdata.get('startTime'),
+                endDate: formdata.get('endTime'), zone: formdata.get('address'),
+                venue: formdata.get('venue'),
+                poster: formData.url,
+                description: formdata.get('description')
+            }
+                : undefined;
+        } else event = formEvent;
 
 
         try {
@@ -151,7 +181,10 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
                     "token": `${Cookies.get('token')}`
                 }
             }).then(async (response) => {
-                const data = await response.json();
+               return await response.json();
+            }).then((data) => {
+                console.log(data);
+                setOrgId(() => data);
             })
         } catch (e) {
             console.error(e);
@@ -162,7 +195,7 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
     return (
         <div className='flex flex-col h-auto w-screen overflow-y-scroll bg-[rgb(5,6,6)] p-5 pb-[7vh]'>
             <div className="relative">
-                {!tokenStatus ? <SignInModal setTokenStatus={setTokenStatus} tokenStatus={tokenStatus} toggleMenu={toggleModal} /> : <></>}
+                {!tokenStatus ? <SignInModal allocateOrg={allocateOrg} orgList={orgList} setShow={setShow} setTokenStatus={setTokenStatus} tokenStatus={tokenStatus} toggleMenu={toggleModal} /> : <></>}
                 {orgList.length > 0 ?
                     <div className='flex flex-col justify-center items-center fixed z-10 bg-[rgb(16,17,19)] rounded-lg border-2 max-w-[100%] border-white mt-80 mx-4 py-10 shadow-2xl shadow-slate-100'>
                         <label className='text-2xl p-2 text-[rgb(233,186,0)]'>Select an Organization

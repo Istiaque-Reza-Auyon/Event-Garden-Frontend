@@ -6,10 +6,10 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 type SignInFormProps = {
-    
+    setLoader: (status: boolean) => void;
 };
 
-const SignInForm:React.FC<SignInFormProps> = () => {
+const SignInForm:React.FC<SignInFormProps> = ({setLoader}) => {
 
     const[status, setStatus] = useState(0);
     const router = useRouter();
@@ -32,7 +32,8 @@ const SignInForm:React.FC<SignInFormProps> = () => {
                 if (data) {
                     setStatus(0);
                     Cookies.set('token', data , {expires: 7});
-                    router.push('/explore');
+                    router.push('/orgs');
+                    setLoader(true);
                 }
                 else {
                     setStatus(1);

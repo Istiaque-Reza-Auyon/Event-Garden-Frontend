@@ -3,16 +3,18 @@
 import React, {useState} from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 
 
 type SignUpFormProps = {
-    
+    setLoader : (status:boolean) => void;
 };
 
-const SignUpForm:React.FC<SignUpFormProps> = () => {
+const SignUpForm:React.FC<SignUpFormProps> = ({setLoader}) => {
 
-    const[emailValid, setEmailValid] = useState(0);   
+    const[emailValid, setEmailValid] = useState(0);
+    const router = useRouter();   
     
 
     const messageMap : {[key: number]: string} = {
@@ -51,6 +53,8 @@ const SignUpForm:React.FC<SignUpFormProps> = () => {
                 if (data !== 'error' && data !== 'email already exists') {
                     setEmailValid(1);
                     Cookies.set('token', data , {expires: 7});
+                    router.push('/orgs');
+                    setLoader(true);
                 }
                 else if(data === 'email already exists') {
                     setEmailValid(2);
