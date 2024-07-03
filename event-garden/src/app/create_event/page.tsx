@@ -6,9 +6,7 @@ import { ICreateTicket } from '../assets/interfaces';
 import CreateEvent from '../component/CreateEvent';
 import { FormContext } from '../assets/contextApi';
 import LottieLoader from '../component/LottieLoader';
-
-
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 type pageProps = {
@@ -76,10 +74,14 @@ const page: React.FC<pageProps> = () => {
 
   return (
     <div className='bg-black h-[100vh] overflow-y-scroll'>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       {loader ? <LottieLoader />
         : <>
           {
-            !isOpen ? <FormContext.Provider value={{ formData, setFormData, handleChange, toggleMenu, setLoader }}><CreateEvent /> </FormContext.Provider>
+            !isOpen ? <FormContext.Provider value={{ formData, setFormData, handleChange, toggleMenu, setLoader, toast }}><CreateEvent /> </FormContext.Provider>
               : <FormContext.Provider value={{ addTicket, toggleMenu, startDateVal }}><CreateTicket /></FormContext.Provider>
           }
         </>}

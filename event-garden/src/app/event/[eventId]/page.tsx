@@ -8,6 +8,7 @@ import { ITicket } from '@/app/assets/interfaces';
 import LottieLoader from '@/app/component/LottieLoader';
 import { IEvent } from '@/app/assets/interfaces';
 import { initEvent } from '@/app/assets/services';
+import toast, { Toaster } from 'react-hot-toast';
 
 type pageProps = {
 
@@ -36,7 +37,7 @@ const page: React.FC<pageProps> = () => {
 
   useEffect(() => {
     setLoader(false);
-  }, [cart]);
+  }, []);
 
   const increaseQuantity = (ticket: ITicket) => {
     if (cart.find((item) => item.id === ticket.id)) {
@@ -96,13 +97,17 @@ const page: React.FC<pageProps> = () => {
 
   return (
     <>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       {
         loader ? <LottieLoader />
           : <>
             {
               !isOpen ?
                 <EventDetails poster={event.poster} toggleMenu={toggleMenu} cart={cart} decreaseQuantity={decreaseQuantity} title={event.name} venue={event.venue} date={event.date} location={event.zone} attendeeCount={event.attendeeCount} description={event.description} setPrice={increaseQuantity} eventId={eventId} ticketList={ticketList} users={event.users} />
-                : <TicketPurchase setLoader={setLoader} toggleMenu={toggleMenu} cart={cart} />
+                : <TicketPurchase toast={toast} setLoader={setLoader} toggleMenu={toggleMenu} cart={cart} />
             }
           </>
       }

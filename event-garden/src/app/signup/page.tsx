@@ -3,6 +3,7 @@
 import React, {useState} from 'react';
 import SignUpForm from '../component/SignUpForm';
 import LottieLoader from '../component/LottieLoader';
+import toast, { Toaster } from 'react-hot-toast';
 
 type pageProps = {
     
@@ -14,7 +15,11 @@ const page:React.FC<pageProps> = () => {
     
     return (
         <div className='flex flex-col bg-black h-screen'>
-            {loader?<LottieLoader/>:<SignUpForm setLoader={setLoader}></SignUpForm>}
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
+            {loader?<LottieLoader/>:<SignUpForm toast={toast} setLoader={setLoader}></SignUpForm>}
         </div>
     )
 }

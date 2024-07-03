@@ -4,16 +4,18 @@ import React, { useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
 import { ITicket } from '../assets/interfaces';
 import Cookies from 'js-cookie';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import toast from 'react-hot-toast';
+
 
 
 type TicketPurchaseProps = {
     toggleMenu: () => void;
     cart: ITicket[] | [];
     setLoader: (status: boolean) => void;
+    toast: typeof toast;
 };
 
-const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, cart, setLoader}) => {
+const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, cart, setLoader, toast}) => {
 
     const[totalPrice, setTotalPrice] = useState(cart.reduce(((total,curr) => total + curr.price*curr.quantity),0));
     const[credentialValid, setCredentialValid] = useState(0);
@@ -44,10 +46,10 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, cart, setLoad
             }).then(async (response) => {
                 const data = await response.json();
                 if(data) {
-                    setCredentialValid(2);
+                    toast.success('Ticket purchase successful');
                     setLoader(true);
-                    window.location.reload();
-                }
+                    setTimeout(()=> window.location.reload(), 1500)
+                } else toast.error('Ticket purchase failed');
             })
         } catch (e) {
            `failed because ${e}`;

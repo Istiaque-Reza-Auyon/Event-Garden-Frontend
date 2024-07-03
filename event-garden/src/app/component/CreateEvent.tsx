@@ -14,7 +14,7 @@ type CreateEventProps = {
 
 const CreateEvent: React.FC<CreateEventProps> = () => {
 
-    const { formData, setFormData, handleChange, toggleMenu, setLoader } = useContext(FormContext);
+    const { formData, setFormData, handleChange, toggleMenu, setLoader, toast } = useContext(FormContext);
     const [orgList, setOrgList] = useState<IOrganization[]>([]);
     const [orgId, setOrgId] = useState('');
     const [tryAgain, setTryAgain] = useState(0);
@@ -99,13 +99,6 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
         if (orgList.length > 0) setOrgList([]);
     }
 
-    // const handleAlternateCreate = () => {
-    //     if (orgList.length == 1) setOrgId(String(orgList[0].id));
-    //     if (!tokenStatus) setTokenStatus(true);
-    //     if (orgList.length > 0) setOrgList([]);
-    //     addEvent(eventData);
-    // }
-
     const addEvent = async (formEvent: any) => {
         let event;
         if (formEvent !== eventData) {
@@ -148,7 +141,10 @@ const CreateEvent: React.FC<CreateEventProps> = () => {
                 } catch (e) {
                     console.error(e);
                 }
-                data ? router.push(`/event/${data}`) : 'failed';
+                if (data)  {
+                    router.push(`/event/${data}`);
+                    toast.success('Event creation successful');
+                } else toast.error("Event creation failed.");
             })
         } catch (e) {
             console.error(e);
