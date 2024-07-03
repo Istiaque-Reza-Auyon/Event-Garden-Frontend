@@ -1,9 +1,10 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { FormContext } from '../assets/contextApi';
 
 type SignInFormProps = {
     setLoader: (status: boolean) => void;
@@ -12,6 +13,8 @@ type SignInFormProps = {
 const SignInForm:React.FC<SignInFormProps> = ({setLoader}) => {
 
     const[status, setStatus] = useState(0);
+
+    const { setTokenStatus} = useContext(FormContext);
     const router = useRouter();
 
     const signInUser = (formEvent:any) => {
@@ -34,6 +37,7 @@ const SignInForm:React.FC<SignInFormProps> = ({setLoader}) => {
                     Cookies.set('token', data , {expires: 7});
                     router.push('/orgs');
                     setLoader(true);
+                    setTokenStatus(true);
                 }
                 else {
                     setStatus(1);

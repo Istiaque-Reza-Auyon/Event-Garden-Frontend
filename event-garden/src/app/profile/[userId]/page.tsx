@@ -1,6 +1,6 @@
 "use client"
 
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useContext} from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { FaCamera } from "react-icons/fa6";
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import { MdEmail } from "react-icons/md";
 import { FaCrown } from "react-icons/fa";
 import { isoToDateTime } from '../../../../utils';
 import Cookies from 'js-cookie';
-
+import { FormContext } from '@/app/assets/contextApi';
 type pageProps = {
     
 };
@@ -17,7 +17,8 @@ const page:React.FC<pageProps> = () => {
 
     const [url, setUrl] = useState(`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1715968798/samples/logo.png`);
     const [userObject, setUserObject] = useState<any>();
-
+    const { setTokenStatus} = useContext(FormContext);
+    
     const pathname = usePathname();
     const userId = pathname.split('/')[2];
 
@@ -89,6 +90,7 @@ const page:React.FC<pageProps> = () => {
 
   const logOut = () => {
     Cookies.remove('token');
+    setTokenStatus(false);
   }
 
     
