@@ -97,14 +97,14 @@ const page:React.FC<pageProps> = () => {
     return (
         <div className='h-screen overflow-y-scroll bg-[rgb(21,22,24)]'>
             <div className='relative flex flex-col justify-start items-center p-4 bg-[rgb(21,22,24)]'>
-                <div style={{backgroundImage: `url(${url})`}} className=" flex flex-col justify-center items-center bg-[div: var(backgroundImage)] h-[10rem] w-[10rem] bg-contain rounded-full mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]"></div>
+                <div style={{backgroundImage: `url(${url})`}} className=" flex flex-col justify-center items-center bg-[div: var(backgroundImage)] h-[20vh] w-[20vh] bg-contain rounded-full mt-5 border-[rgb(233,186,0)] border-2 shadow-custom1 shadow-[rgb(233,186,0)]"></div>
                 {/* <img src={file} className='max-h-[90%] max-w-[100%] mb-3'/> */}
-                <form className='absolute mt-[30%]  items-center'>
-                    <div className='mt-[90%]'><label htmlFor="file-upload" className="text-3xl ">
+                <form className='absolute mt-[17.5vh]  items-center'>
+                    <div className='mt-[]'><label htmlFor="file-upload" className="text-3xl ">
                     <FaCamera style={{color:'yellow'}}/>
                     <input type="file" id="file-upload" placeholder='text'className='hidden' onChange={handleUpload}/></label></div>
                 </form>
-                <div className='flex justify-center w-[100%] border-b-[0.5px] border-[rgb(65,66,66)]'><h1 className='text-white text-4xl mt-4 '>{userObject?.firstName + ' '+ userObject?.lastName}</h1></div>
+                <div className='flex justify-center w-[60vh] border-b-[0.5px] border-[rgb(65,66,66)]'><h1 className='text-white text-4xl mt-4 '>{userObject?.firstName + ' '+ userObject?.lastName}</h1></div>
                 <div className='flex flex-col items-center w-[100%] border-b-[0.5px] border-[rgb(65,66,66)]'>
                     <div className='flex flex-col items-center border-b-[0.5px] border-[rgb(65,66,66)]'>
                         <Link href={`/orgs`}><button className='flex items-center p-2 bg-[rgb(240,242,249)] text-black mt-5 rounded-[50px]'>View Organizations</button></Link>
