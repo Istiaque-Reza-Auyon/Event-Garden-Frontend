@@ -1,4 +1,4 @@
-type TicketType = {"id"?: number,
+type ITicket = {"id"?: number,
 "name": string,
 "price": number,
 "quantity": number,
@@ -37,7 +37,9 @@ type IEvent = {
     attendees?: any,
     totalRevenue?: number,
     totalTicketsSold?: number,
-    users?: any
+    users?: any,
+    date: string,
+    attendeeCount: number
 }
 
 type ICreateTicket = {
@@ -65,4 +67,4 @@ type IUser = {
     profilePic: string;
 }
 
-export type {TicketType, IOrganization, IEvent, ICreateTicket,IFormContext, IUser}
+export type {ITicket, IOrganization, IEvent, ICreateTicket,IFormContext, IUser}

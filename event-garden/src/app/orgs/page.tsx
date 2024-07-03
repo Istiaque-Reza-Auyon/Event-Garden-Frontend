@@ -17,7 +17,7 @@ const page:React.FC<pageProps> = () => {
     const[organizationList,setOrganizationList] = useState<IOrganization[]|[]>([]);
 
     useEffect(() => {
-        const getEvents = (() => {
+        const getOrgs = (() => {
         try{
             fetch(`${process.env.NEXT_PUBLIC_URL}/admin/organization/find/all`,{
                 method: "GET",
@@ -35,7 +35,7 @@ const page:React.FC<pageProps> = () => {
             console.error(e);
         }
     }) ();
-})
+},[])
     
     return (
             <div className ="bg-[rgb(20,21,23)] h-screen overflow-y-scroll flex flex-col pb-[7vh]">

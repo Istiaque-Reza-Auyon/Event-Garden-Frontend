@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import { FaPlus } from "react-icons/fa";
-import { TicketType } from '../assets/interfaces';
+import { ITicket } from '../assets/interfaces';
 import { FaMinus } from "react-icons/fa";
 
 type TicketProps = {
     title: string,
     description: string,
     ticketPrice: number;
-    ticket: TicketType;
+    ticket: ITicket;
     quantity: number|undefined;
-    setPrice: (ticket: TicketType) => void;
-    decreaseQuantity: (ticket: TicketType) => void;
+    setPrice: (ticket: ITicket) => void;
+    decreaseQuantity: (ticket: ITicket) => void;
 };
 
 const Ticket:React.FC<TicketProps> = ({title,description,setPrice,ticketPrice,ticket, quantity, decreaseQuantity}) => {

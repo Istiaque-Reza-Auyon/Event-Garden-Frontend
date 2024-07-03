@@ -50,7 +50,6 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
     }, [tokenStatus]);
 
     const handleStatus = () => {
-        console.log(Cookies.get('token'), 'token', tokenStatus);
         if (Cookies.get('token')) setTokenStatus(true);
         else setTokenStatus(false);
     }
@@ -59,9 +58,9 @@ const BottomNavBar:React.FC<BottomNavBarProps> = () => {
     return (
     <div className='flex bg-transparent justify-evenly fixed bottom-0 w-screen h-[7vh] '>
         <button className='flex justify-start text-5xl'><Link href={'/'}><GoHome style={{color:'yellow'}} className='text-5xl'/></Link></button>
-        {!tokenStatus ?<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/signin`}><GoOrganization style={{color:'yellow'}} className='' /></Link></button>:<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/orgs`}><GoOrganization style={{color:'yellow'}} /></Link></button>}
+        {!tokenStatus ? <></>:<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/orgs`}><GoOrganization style={{color:'yellow'}} /></Link></button>}
         <button className='flex justify-start text-5xl'><Link href={'/explore'}><MdOutlineTravelExplore style={{color:'yellow'}} className='text-5xl'/></Link></button>       
-        {!tokenStatus ? <button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/signin`}><CgProfile style={{color:'yellow'}} className=''/></Link></button>:<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/profile/${userId}`} ><CgProfile style={{color:'yellow'}} className=''/></Link></button>}
+        {!tokenStatus ? <></>:<button onClick={handleStatus} className='flex justify-start text-5xl'><Link href={`/profile/${userId}`} ><CgProfile style={{color:'yellow'}} className=''/></Link></button>}
     </div>)
 }
 export default BottomNavBar;

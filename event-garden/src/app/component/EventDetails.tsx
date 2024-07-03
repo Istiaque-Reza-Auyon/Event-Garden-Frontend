@@ -1,6 +1,6 @@
 import React from 'react';
 import EventDescription from '../component/EventDescription';
-import { TicketType } from '../assets/interfaces';
+import { ITicket } from '../assets/interfaces';
 
 
 
@@ -13,11 +13,11 @@ type EventDetailsProps = {
     description:string;
     toggleMenu: () => void;
     eventId: string|null;
-    ticketList: TicketType[] | [];
-    cart: TicketType[] | [];
+    ticketList: ITicket[] | [];
+    cart: ITicket[] | [];
     poster: string;
-    setPrice: (ticket: TicketType) => void;
-    decreaseQuantity: (ticket: TicketType) => void;
+    setPrice: (ticket: ITicket) => void;
+    decreaseQuantity: (ticket: ITicket) => void;
     users: any;
 };
 

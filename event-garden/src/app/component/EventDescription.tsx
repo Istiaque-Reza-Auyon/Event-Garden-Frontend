@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { FaLocationDot } from "react-icons/fa6";
 import Ticket from './Ticket';
-import { TicketType } from '../assets/interfaces';
+import { ITicket } from '../assets/interfaces';
 
 type EventDescriptionProps = {
     title: string;
@@ -11,11 +11,11 @@ type EventDescriptionProps = {
     attendeeCount: number;
     description:string;
     eventId: string|null;
-    ticketList: TicketType[]|[];
-    cart: TicketType[]|[];
+    ticketList: ITicket[]|[];
+    cart: ITicket[]|[];
     toggleMenu: () => void;
-    setPrice: (ticket: TicketType) => void;
-    decreaseQuantity: (ticket: TicketType) => void;
+    setPrice: (ticket: ITicket) => void;
+    decreaseQuantity: (ticket: ITicket) => void;
     users: any;
 };
 
@@ -24,14 +24,14 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
     const [attendees, setAttendees] = useState([]);
 
     useEffect(()=> {
-        setAttendees(users.reduce((total:any, curr:any) => {
+        setAttendees(users?.reduce((total:any, curr:any) => {
             if (total.some((user:any) => user.orderId === curr.orderId)) return total;
             else total.push(curr);
             return total;
         },[]));
     },[users])
 
-    const quantity = (ticket: TicketType) => {
+    const quantity = (ticket: ITicket) => {
        const cartTicket = cart.find(cartTicket => ticket.id === cartTicket.id);
        return cartTicket?.quantity;
     } 
@@ -43,7 +43,7 @@ const EventDescription:React.FC<EventDescriptionProps> = ({title,venue,date,loca
             <p className=' text-[rgb(233,186,0)] my-2'>{date}</p>
             <div className='flex items-center '><FaLocationDot style={{ color: 'rgb(233,186,0)'}}/>  <p className=' text-[rgb(233,186,0)] my-2 mx-2'>{location}</p></div>
             <p className=' text-[rgb(233,186,0)] my-2'>{attendeeCount} + people are going</p>
-            {ticketList?.map( (ticket:TicketType) => <Ticket quantity={quantity(ticket)} ticket={ticket}  decreaseQuantity={decreaseQuantity}  title={ticket.name}  ticketPrice={ticket.price} description={ticket.description}  setPrice={setPrice} ></Ticket>)}
+            {ticketList?.map( (ticket:ITicket) => <Ticket quantity={quantity(ticket)} ticket={ticket}  decreaseQuantity={decreaseQuantity}  title={ticket.name}  ticketPrice={ticket.price} description={ticket.description}  setPrice={setPrice} ></Ticket>)}
             <p className='text-white text-wrap'>{description}</p>
             <div className='flex flex-col  border-t-2 border-[rgb(230,226,214)] w-[100%]'>
                 <h1 className='text-[rgb(233,186,0)] border-top-2 border-[rgb(233,186,0)] pt-2 text-xl pb-3'>GUESTLIST</h1>

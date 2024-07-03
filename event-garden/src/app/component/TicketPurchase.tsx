@@ -2,18 +2,18 @@
 
 import React, { useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
-import { TicketType } from '../assets/interfaces';
+import { ITicket } from '../assets/interfaces';
 import Cookies from 'js-cookie';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 
 type TicketPurchaseProps = {
     toggleMenu: () => void;
-    price: number;
-    quantity: number;
-    cart: TicketType[] | [];
+    cart: ITicket[] | [];
+    setLoader: (status: boolean) => void;
 };
 
-const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quantity, cart}) => {
+const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, cart, setLoader}) => {
 
     const[totalPrice, setTotalPrice] = useState(cart.reduce(((total,curr) => total + curr.price*curr.quantity),0));
     const[credentialValid, setCredentialValid] = useState(0);
@@ -43,7 +43,11 @@ const TicketPurchase:React.FC<TicketPurchaseProps> = ({toggleMenu, price, quanti
             }
             }).then(async (response) => {
                 const data = await response.json();
-                if(data) setCredentialValid(2);
+                if(data) {
+                    setCredentialValid(2);
+                    setLoader(true);
+                    window.location.reload();
+                }
             })
         } catch (e) {
            `failed because ${e}`;
